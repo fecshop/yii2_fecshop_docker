@@ -1,0 +1,4 @@
+80.82.77.33 - - [20/Jan/2018:04:24:17 +0000] GET / HTTP/1.1 200 98874 - Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 -
+80.82.77.33 - - [20/Jan/2018:04:24:19 +0000] GET /robots.txt HTTP/1.1 200 98282 - - -
+80.82.77.33 - - [20/Jan/2018:04:24:20 +0000] GET /sitemap.xml HTTP/1.1 200 98284 - - -
+80.82.77.33 - - [20/Jan/2018:04:24:22 +0000] GET /favicon.ico HTTP/1.1 200 24232 - python-requests/2.13.0 -
