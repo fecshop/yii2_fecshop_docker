@@ -32,6 +32,7 @@ Fecshop Docker
 
 `./db/mysql/data`: mysql 数据库表数据存放的位置
 
+`./db/mysql/conf.d`: mysql 配置文件
  
 `./services`: 服务软件部分，譬如php nginx等
 
