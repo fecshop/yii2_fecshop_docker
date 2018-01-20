@@ -130,17 +130,17 @@ docker-compose stop
 
 ### docker compose 测试环境
 
-1、新建php文件：`./app/my.fecshop.com/index.php`  ，文件里面添加代码： `<?php  echo phpinfo();  ?>`
+1、新建php文件：`./app/www.test.com/index.php`  ，文件里面添加代码： `<?php  echo phpinfo();  ?>`
 
 2、打开nginx配置文件：`./services/web/nginx/conf/conf.d/default.conf`
 
-添加配置，将`my.fecshop.com`改成你自己的地址
+添加配置，将`www.test.com`改成你自己的地址
 
 ```
 server {
     listen     80  ;
-    server_name my.fecshop.com;
-    root  /www/web/my.fecshop.com;
+    server_name www.test.com;
+    root  /www/web/www.test.com;
     server_tokens off;
     include none.conf;
     index index.php index.html index.htm;
