@@ -132,7 +132,7 @@ docker-compose stop
 
 ### docker compose 测试环境
 
-1、我们测试的php文件：`./app/my.fecshop.com/index.php` 
+1、新建php文件：`./app/my.fecshop.com/index.php`  ，文件里面添加代码： `<?php  echo phpinfo();  ?>`
 
 2、打开nginx配置文件：`./services/web/nginx/conf/conf.d/default.conf`
 
