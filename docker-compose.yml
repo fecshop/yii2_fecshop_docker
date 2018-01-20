@@ -1,0 +1,75 @@
+version: "2"  
+services:  
+  web:  
+    image: nginx  
+    ports:  
+      - "80:80"  
+    volumes:  
+      - ./app:/www/web
+      - ./services/web/nginx/conf:/etc/nginx
+      - ./services/web/nginx/logs:/www/web_logs
+    networks:
+        - code-network
+    depends_on:
+      - php
+  mysql:  
+    image: mysql  
+    volumes:  
+      - ./db/mysql/data:/var/lib/mysql  
+    ports:  
+      - "3306:3306" 
+    restart: always
+    environment:
+      - MYSQL_DATABASE= fecshop
+      - MYSQL_ROOT_PASSWORD= fecshop123456
+      - MYSQL_USER= fecshop
+      - MYSQL_PASSWORD= 123456
+    networks:
+        - code-network 
+  php:  
+    build: 
+      context: ./services/php/docker/
+    volumes:  
+      - ./app:/www/web
+      - ./services/php/etc/php7.1.13.ini:/usr/local/etc/php/conf.d/php7.1.13.ini
+    depends_on:
+      - mongodb
+      - mysql
+    networks:
+        - code-network  
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/data/logs
+      - MONGODB_DATABASE="fecshop"
+      - MONGODB_USER="fecshop" 
+      - MONGODB_PASS="fecshop123"
+    volumes:
+      - ./db/mongodb/data:/data/db
+      - ./db/mongodb/logs:/data/logs
+      - ./db/mongodb/etc/mongod.conf:/etc/mongod.conf
+    ports:
+      - 27017:27017 
+    networks:
+      - code-network         
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD="123456789"
+    volumes:
+      - ./db/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf 
+      - ./db/redis/data:/data 
+    networks:
+      - code-network 
+networks:
+  code-network:
+    driver: bridge
+        
+        
+        
+        
+        
