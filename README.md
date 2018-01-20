@@ -7,8 +7,11 @@ Fecshop Docker
 > 可以根据下面的说明操作
 
 
+
 目录结构
 ---------
+
+
 
 `./app`: 这里是代码文件，fecshop的代码文件放到这里
 
@@ -50,7 +53,7 @@ Fecshop Docker
 
 
 
-### docker compose使用
+### docker compose 安装环境
 
 1、下载安装
 
@@ -105,12 +108,11 @@ docker-compose stop
 
 到这里我们的环境就安装好了，下面我们测试一下我们的环境
 
+### docker compose 测试环境
 
-2、添加php 和 nginx 设置
+1、我们测试的php文件：`./app/my.fecshop.com/index.php` 
 
-2.1、我们测试的php文件 ./app/my.fecshop.com/index.php 
-
-2.2、打开nginx配置文件
+2、打开nginx配置文件：`./services/web/nginx/conf/conf.d/default.conf`
 
 添加配置，将`my.fecshop.com`改成你自己的地址
 
@@ -152,9 +154,73 @@ server {
 }
 ```
 
-2.3 启动 docker-compose up
+3 启动 docker-compose up
 
 就可以看到输出的phpinfo的信息了。
+
+### 安装fecshop
+
+> 对于docker ，一定要切记，docker不是虚拟机！docker不是虚拟机！docker不是虚拟机！
+
+
+`宿主机`: 就是您的linux主机
+
+`容器主机`：就是docker容器虚拟的主机。
+
+每一个服务，对应一个docker 容器，譬如mysql
+一个容器，php一个容器，redis一个容器，mongdob一个容器，
+每一个容器的数据和配置文件都是在宿主主机上面，通过`volumes`
+挂载到容器的相应文件夹中，（我们在`./docker-compose.yml`
+配置文件中的`volumes`做了映射）
+
+因此，对于docker 容器，里面涉及到存储的部分，都应该通过
+挂载的方式映射到宿主机上面，而不是在容器里面。
+
+3.1 composer 安装fecshop
+
+`docker compose up -d` 操作完成后,
+我们通过命令进入到php的容器：
+
+```
+docker-compose exec php  bash
+// 进入成功后，在php容器中执行：
+cd /www/web
+// 将`1.3.0.3` 替换成相应的fecshop版本。下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
+composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
+cd fecshop   
+./init
+
+```
+
+如果上面composer 安装太慢，可以使用 [composer 中国镜像](http://www.fancyecommerce.com/2017/04/19/composer-%E9%BB%98%E8%AE%A4%E5%9C%B0%E5%9D%80%E6%94%B9%E4%B8%BA%E4%B8%AD%E5%9B%BD%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80%EF%BC%8C%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%9B%BD%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80/)
+
+
+3.2 百度云盘完整版
+
+> 通过百度网盘安装(不建议),如果因为墙无法使用composer，可以访问百度云盘，
+> 下载地址为：http://pan.baidu.com/s/1hs1iC2C 下载日期最新的压缩包即可
+
+如果您使用的是百度云盘完整版，
+那么将文件解压到宿主机 `./app/` 下面即可，将文件夹的名字改成`fecshop`
+，完成后  `./app/fecshop` 就是fecshop系统包的根目录
+
+
+
+3.3 下面配置fecshop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
