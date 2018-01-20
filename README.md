@@ -8,7 +8,7 @@ Fecshop Docker
 
 
 
-目录结构
+目录结构介绍
 ---------
 
 
@@ -54,11 +54,32 @@ Fecshop Docker
 
 
 
-### docker compose 安装环境
+
+安装docker和docker compose
+-------------------------
+
+linux内核需要大约3.1.0 ,下面是centos 7 下面部署的过程：
+
+
+1、安装docker
+
+```
+sudo curl -sSL https://get.daocloud.io/docker | sh
+```
+
+/2、安装 docker compose，资料：[install-compose](https://docs.docker.com/compose/install/#install-compose)
+
+```
+sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+```
+
+
+
+### docker compose 安装部署环境
 
 1、下载安装
 
-下载：
+下载当前库文件，通过`git clone`下载：
 
 ```
 git clone https://github.com/fecshop/yii2_fecshop_docker.git
