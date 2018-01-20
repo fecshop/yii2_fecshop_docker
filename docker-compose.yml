@@ -40,7 +40,6 @@ services:
         - code-network  
   mongodb:
     image: mongo:latest
-    container_name: "mongodb"
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/data/logs
@@ -54,7 +53,14 @@ services:
     ports:
       - 27017:27017 
     networks:
-      - code-network         
+      - code-network 
+  
+  xunsearch:
+    image: hightman/xunsearch:latest
+    volumes:
+      - ./db/xunsearch/data:/usr/local/xunsearch/data  
+    networks:
+      - code-network 
   redis:
     image: redis
     ports:

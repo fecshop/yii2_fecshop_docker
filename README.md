@@ -12,7 +12,6 @@ Fecshop Docker
 ---------
 
 
-
 `./app`: 这里是代码文件，fecshop的代码文件放到这里
 
 `./db`: 这里是环境部分-数据库部分
@@ -116,15 +115,11 @@ docker-compose ps
 docker-compose exec php bash
 ```
 
-
 停止：
 
 ```
 docker-compose stop
 ```
-
-
-
 
 到这里我们的环境就安装好了，下面我们测试一下我们的环境
 
