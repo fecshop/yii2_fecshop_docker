@@ -82,10 +82,23 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-c
 git clone https://github.com/fecshop/yii2_fecshop_docker.git
 ```
 
-构建：
+1.进入上面的文件夹 yii2_fecshop_docker，打开 `docker-compose.yml`
+
+更改mysql的密码：
+```
+- MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
+```
+
+更改redis的密码：打开文件：`./db/redis/etc/redis-password`
+,更改里面的redis密码即可。
+
+mysql和redis的密码要记住，后面配置要用到。
+
+
+2.构建：
 
 > 第一次构建需要下载环境，时间会比较长，除了下载docker中心的镜像，还要构建镜像
-> 看网速，如果用阿里云，15分钟差不多完成。
+> 看网速，如果用阿里云，15分钟差不多完成，使用下面的命令构建环境
 
 ```
 docker-compose build
@@ -94,7 +107,7 @@ docker-compose build
 运行：
 
 ```
-docker-compose up
+docker-compose up  // 按下ctrl+c退出停止。
 ```
 
 后台运行：
@@ -171,7 +184,7 @@ server {
 
 3 启动 docker-compose up
 
-就可以看到输出的phpinfo的信息了。
+访问：www.test.com，就可以看到输出的phpinfo的信息了。
 
 ### 安装fecshop
 
@@ -191,9 +204,11 @@ server {
 因此，对于docker 容器，里面涉及到存储的部分，都应该通过
 挂载的方式映射到宿主机上面，而不是在容器里面。
 
+
+
 3.1 composer 安装fecshop
 
-`docker compose up -d` 操作完成后,
+`docker compose up -d` 通过docker compose启动后
 我们通过命令进入到php的容器：
 
 ```
@@ -202,11 +217,10 @@ docker-compose exec php  bash
 cd /www/web
 // 将`1.3.0.3` 替换成相应的fecshop版本。下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
 composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
-cd fecshop   
-
+   
 ```
 
-3.1.2 yii2_mongodb扩展bug的处理
+3.1.2 yii2_mongodb扩展bug的处理（官方还未发布新版本）
 
 另开一个xshell窗口，在宿主主机  ./app/fecshop中打开composer.json，在require中加入
 `"yiisoft/yii2-mongodb": "dev-master"`, 如下：
@@ -220,16 +234,17 @@ cd fecshop
     },
 ```
 
-然后执行：
+回到3.1部分的xshell窗口，执行：
 
 ```
+cd fecshop
 composer update
 ./init
 ```
+执行玩后，通过composer加载的文件就完成了。
 
 
-
-其他详细参看文件：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
+> 参考资料：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
 
 3.2 百度云盘完整版
 
@@ -245,14 +260,14 @@ cd fecshop
 ./init
 ```
 
-其他详细参看文件：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
+> 参考资料：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
 
 
 
-4 下面配置fecshop
+4、配置fecshop
 
 
-详细步骤，详细参考：[Fecshop 初始配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)
+> 参考：[Fecshop 初始配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)
 
 为了更方便的配置，Terry在 `./example_data/` 中已经进行了一些默认配置，
 您可以使用默认配置先搭建起来，然后在按照自己的需要进行更改。
@@ -370,7 +385,7 @@ mongo mongodb:27017/fecshop --quiet /data/example_db/mongo-fecshop_test-20170419
 
 6.3安装mysql数据库的测试数据
 
-5.1在根目录下执行，进入mysql的容器
+在根目录(docker-compose.yml文件所在目录)下执行，进入mysql的容器
 
 ```
 docker-compose exec mysql bash
@@ -384,11 +399,23 @@ source /var/example_db/mysql_fecshop.sql
 ```
 
 
+7.初始化搜索引擎数据
+
+在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
+
+```
+docker-compose exec php bash
+cd /www/web/fecshop/vendor/fancyecommerce/fecshop/shell/search
+sh fullSearchSync.sh
+```
 
 
+8.后台的默认用户名密码
 
-
-
+```
+admin
+admin123
+```
 
 
 

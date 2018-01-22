@@ -26,7 +26,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
     networks:
-        - code-network 
+      - code-network 
   php:  
     build: 
       context: ./services/php/docker/
