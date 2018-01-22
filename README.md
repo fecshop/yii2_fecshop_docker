@@ -82,15 +82,18 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-c
 git clone https://github.com/fecshop/yii2_fecshop_docker.git
 ```
 
-1.进入上面的文件夹 yii2_fecshop_docker，打开 `docker-compose.yml`
+1.进入上面下载完成后的文件夹 yii2_fecshop_docker，打开 `docker-compose.yml`
 
-更改mysql的密码：
+1.1更改mysql的密码：
 ```
 - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
 ```
 
-更改redis的密码：打开文件：`./db/redis/etc/redis-password`
-,更改里面的redis密码即可。
+1.2更改redis的密码：
+
+```
+打开文件：`./db/redis/etc/redis-password`,更改里面的redis密码即可。
+```
 
 mysql和redis的密码要记住，后面配置要用到。
 
@@ -104,19 +107,19 @@ mysql和redis的密码要记住，后面配置要用到。
 docker-compose build
 ```
 
-运行：
+完成后，运行：
 
 ```
 docker-compose up  // 按下ctrl+c退出停止。
 ```
 
-后台运行：
+后台运行：（守护进程的方式）
 
 ```
 docker-compose up -d
 ```
 
-查看各个部分：
+查看compose启动的各个容器的状态：
 
 ```
 docker-compose ps
@@ -128,87 +131,52 @@ docker-compose ps
 docker-compose exec php bash
 ```
 
-停止：
+退出某个容器
+
+```
+exit
+```
+
+
+停止 docker compose启动的容器：
 
 ```
 docker-compose stop
 ```
 
-到这里我们的环境就安装好了，下面我们测试一下我们的环境
+到这里我们的环境就安装好了，也讲述了一些docker compose常用的命令，
+下面我们测试一下我们的环境
 
-### docker compose 测试环境
 
-1、新建php文件：`./app/www.test.com/index.php`  ，文件里面添加代码： `<?php  echo phpinfo();  ?>`
+### 启动docker ，下载安装fecshop
 
-2、打开nginx配置文件：`./services/web/nginx/conf/conf.d/default.conf`
 
-添加配置，将`www.test.com`改成你自己的地址
-
-```
-server {
-    listen     80  ;
-    server_name www.test.com;
-    root  /www/web/www.test.com;
-    server_tokens off;
-    include none.conf;
-    index index.php index.html index.htm;
-    access_log /www/web_logs/access.log wwwlogs;
-    error_log  /www/web_logs/error.log  notice;
-    location ~ \.php$ {
-        fastcgi_pass   php:9000;
-        fastcgi_index  index.php;
-        include fcgi.conf;
-    }
-	
-	location /en/ {
-        index index.php;
-        if (!-e $request_filename){
-            rewrite . /en/index.php last;
-        }
-    }
-
-    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
-            expires      30d;
-    }
-
-    location ~ .*\.(js|css)?$ {
-            expires      12h;
-    }
-    
-	location /license/ {
-		rewrite ^/(.*)/$ /$1 permanent;
-	}
-
-}
-```
-
-3 启动 docker-compose up
-
-访问：www.test.com，就可以看到输出的phpinfo的信息了。
-
-### 安装fecshop
 
 > 对于docker ，一定要切记，docker不是虚拟机！docker不是虚拟机！docker不是虚拟机！
-
+> 每一个服务，对应一个docker 容器，譬如mysql
+> 一个容器，php一个容器，redis一个容器，mongdob一个容器，
+> 每一个容器的数据和配置文件都是在宿主主机上面，通过`volumes`
+> 挂载到容器的相应文件夹中，（我们在`./docker-compose.yml`
+> 配置文件中的`volumes`做了映射）
+> 
+> 因此，对于docker 容器，里面涉及到存储的部分，都应该通过
+> 挂载的方式映射到宿主机上面，而不是在容器里面。
 
 `宿主机`: 就是您的linux主机
 
 `容器主机`：就是docker容器虚拟的主机。
 
-每一个服务，对应一个docker 容器，譬如mysql
-一个容器，php一个容器，redis一个容器，mongdob一个容器，
-每一个容器的数据和配置文件都是在宿主主机上面，通过`volumes`
-挂载到容器的相应文件夹中，（我们在`./docker-compose.yml`
-配置文件中的`volumes`做了映射）
 
-因此，对于docker 容器，里面涉及到存储的部分，都应该通过
-挂载的方式映射到宿主机上面，而不是在容器里面。
+1、启动: 
+
+进入yii2_fecshop_docker目录，执行：
+
+`docker-compose up -d`
 
 
 
-3.1 composer 安装fecshop
+2、composer 安装fecshop
 
-`docker compose up -d` 通过docker compose启动后
 我们通过命令进入到php的容器：
 
 ```
@@ -220,7 +188,7 @@ composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
    
 ```
 
-3.1.2 yii2_mongodb扩展bug的处理（官方还未发布新版本）
+2.1.2 yii2_mongodb扩展bug的处理（官方还未发布新版本）
 
 另开一个xshell窗口，在宿主主机  ./app/fecshop中打开composer.json，在require中加入
 `"yiisoft/yii2-mongodb": "dev-master"`, 如下：
@@ -233,7 +201,8 @@ composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
         ...
     },
 ```
-
+保存退出
+，
 回到3.1部分的xshell窗口，执行：
 
 ```
@@ -241,12 +210,12 @@ cd fecshop
 composer update
 ./init
 ```
-执行玩后，通过composer加载的文件就完成了。
+执行完后，通过composer加载的文件就完成了。
 
 
 > 参考资料：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
 
-3.2 百度云盘完整版
+2.2 百度云盘完整版
 
 > 通过百度网盘安装(不建议),如果因为墙无法使用composer，可以访问百度云盘，
 > 下载地址为：http://pan.baidu.com/s/1hs1iC2C 下载日期最新的压缩包即可
@@ -264,29 +233,20 @@ cd fecshop
 
 
 
-4、配置fecshop
+### 配置fecshop
 
 
 > 参考：[Fecshop 初始配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)
 
-为了更方便的配置，Terry在 `./example_data/` 中已经进行了一些默认配置，
-您可以使用默认配置先搭建起来，然后在按照自己的需要进行更改。
-下面介绍的是在`./example_data/`里面的各个配置和其他的一些东西，
-您可以进入`./example_data/`文件件，
-将默认的配置覆盖到fecshop中。
-
-进入`./example_data/`文件，执行：
-
-```
-// 复制配置文件，也就是下面的各个store 域名 以及数据库配置
-\cp -rf ./fecshop/* ../app/fecshop/
-```
-
-将 ./example_img_and_db_data/mysql_fecshop.sql 导入到mysql的fecshop数据库中
+> 为了更方便的配置，Terry在 `./example_data/` 中已经进行了一些默认配置，
+> 您可以使用默认配置先搭建起来，然后在按照自己的需要进行更改。
+> 下面介绍的是在`./example_data/`里面的各个配置和其他的一些东西，
+> 您可以进入`./example_data/`文件件，
+> 将默认的配置覆盖到fecshop中。
 
 
 
-4.1本机（浏览器所在的电脑，也就是您的window本机），添加host(打开C:\Windows\System32\drivers\etc\hosts，添加如下代码,如果是其他IP，将 127.0.0.1 替换成其他IP即可。)
+1、本机（浏览器所在的电脑，也就是您的window本机），添加host(打开C:\Windows\System32\drivers\etc\hosts，添加如下代码,如果是其他IP，将 127.0.0.1 替换成其他IP即可。)
 
 ```
 127.0.0.1       my.fecshop.com       # mysql的phpmyadmin的域名指向
@@ -303,20 +263,27 @@ cd fecshop
 127.0.0.1       img5.fecshop.com	#appimage/appserver图片的域名指向
 ```
 
-4.2、配置数据库部分：common/config/main-local.php
 
 
-4.3配置图片部分的域名
+2.更改配置文件
 
-打开文件：`./app/fecshop/common/config/fecshop_local_services/Image.php`
+数据库配置：
+
+打开 ./example_data/fecshop/common/config/main-local.php
+,将mysql的密码，redis的密码，以及redis在session cache中使用的密码，都配置一下，
+密码使用上面进设置的密码。
+
+3.配置图片部分的域名（**使用默认即可，如果您要自定义域名，需要修改**）
+
+文件：`./app/fecshop/common/config/fecshop_local_services/Image.php`
 
 
-4.4nginx做路径指向设置
+4、nginx做路径指向设置
 
-nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
-已经配置好域名部分
+配置文件为`./services/web/nginx/conf/conf.d/default.conf`
+（**已经配置好域名部分使用默认即可，如果您要自定义域名，需要修改**）
 
-4.5Store的配置
+5、Store的配置（**使用默认即可，如果您要自定义域名，需要修改**）
 
 `./example/fecshop/` 下三个入口的store配置
 
@@ -328,12 +295,23 @@ nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 @appserver/config/fecshop_local_services/Store.php 
 ```
 
-5.
+
+6.例子数据修改完成后，复制到fecshop文件夹中
+
+进入`./example_data/`文件，执行：
+
+```
+// 复制配置文件，也就是下面的各个store 域名 以及数据库配置
+\cp -rf ./fecshop/* ../app/fecshop/
+unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
+```
 
 
-5.1创建mysql数据库
 
-在根目录下执行，进入mysql的容器
+
+7.创建mysql数据库
+
+7.1在根目录（./yii2_fecshop_docker）下执行，进入mysql的容器
 
 ```
 docker-compose exec mysql bash
@@ -345,9 +323,12 @@ docker-compose exec mysql bash
 use fecshop;
 create database fecshop;
 show databases;
+exit;
 ```
 
-5.2 Yii2 migratge方式导入表结构。
+exit，退出容器
+
+7.2 Yii2 migratge方式导入表结构。
 
 
 mysql(导入mysql的表，数据，索引):
@@ -362,14 +343,9 @@ mongodb(导入mongodb的表，数据，索引):
 ./yii mongodb-migrate  --interactive=0 --migrationPath=@fecshop/migrations/mongodb
 ```
 
-6.测试数据
+8.测试数据
 
-6.1示例图片解压到fecshop下面,进入example_data文件夹下：
-
-```
-unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
-```
-6.2安装mongodb数据库的测试数据
+8.1安装mongodb数据库的测试数据
 
 在根目录下（github下载完成后的文件夹下）进入mongodb容器
 
@@ -383,7 +359,7 @@ mongo mongodb:27017/fecshop --quiet /data/example_db/mongo-fecshop_test-20170419
 
 执行exit退出容器
 
-6.3安装mysql数据库的测试数据
+8.2安装mysql数据库的测试数据
 
 在根目录(docker-compose.yml文件所在目录)下执行，进入mysql的容器
 
@@ -396,10 +372,12 @@ docker-compose exec mysql bash
 ```
 use fecshop;
 source /var/example_db/mysql_fecshop.sql
+exit
 ```
 
+执行exit退出容器
 
-7.初始化搜索引擎数据
+9.初始化搜索引擎数据
 
 在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
 
@@ -410,12 +388,78 @@ sh fullSearchSync.sh
 ```
 
 
-8.后台的默认用户名密码
+10.后台的默认用户名密码
 
 ```
 admin
 admin123
 ```
+
+
+### 安装VUE部分
+
+
+1.进入 yii2_fecshop_docker 
+，参看文档：https://github.com/fecshop/vue_fecshop_appserver
+，进行安装
+
+
+2.操作到第4步后，进行下面的配置
+
+
+2.1.src/config/store.js
+
+将 `demo.fancyecommerce.com` 改成 `vue.fecshop.com`
+
+2.2.config/prod.env.js
+
+将 
+
+```
+module.exports = {
+  NODE_ENV: '"production"',
+  API_ROOT: '"//fecshop.appserver.fancyecommerce.com"',
+  WEBSITE_ROOT: '"http://demo.fancyecommerce.com"'
+}
+```
+
+改成：
+
+```
+module.exports = {
+  NODE_ENV: '"production"',
+  API_ROOT: '"//appserver.fecshop.com"',
+  WEBSITE_ROOT: '"http://vue.fecshop.com"'
+}
+```
+
+2.3.config/dev.env.js
+
+将 
+
+```
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  API_ROOT: '"//fecshop.appserver.fancyecommerce.com"',
+  WEBSITE_ROOT: '"//demo.fancyecommerce.com"'
+})
+```
+
+改成：
+
+```
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  API_ROOT: '"//appserver.fecshop.com"',
+  WEBSITE_ROOT: '"http://vue.fecshop.com"'
+})
+```
+
+
+
+2.4执行`npm run build`
+
+2.5访问：http://vue.fecshop.com
 
 
 
