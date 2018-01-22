@@ -3,7 +3,8 @@ services:
   web:  
     image: nginx  
     ports:  
-      - "80:80"  
+      - "80:80" 
+    restart: always
     volumes:  
       - ./app:/www/web
       - ./services/web/nginx/conf:/etc/nginx
@@ -13,23 +14,23 @@ services:
     depends_on:
       - php
   mysql:  
-    image: mysql  
+    image: mysql 
+    restart: always
     volumes:  
       - ./db/mysql/data:/var/lib/mysql 
+      - ./db/mysql/example_db:/var/example_db 
       - ./db/mysql/conf.d:/etc/mysql/conf.d      
     ports:  
       - "3306:3306" 
     restart: always
     environment:
-      - MYSQL_DATABASE= fecshop
-      - MYSQL_ROOT_PASSWORD= fecshop123456
-      - MYSQL_USER= fecshop
-      - MYSQL_PASSWORD= 123456
+      - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
     networks:
         - code-network 
   php:  
     build: 
       context: ./services/php/docker/
+    restart: always
     volumes:  
       - ./app:/www/web
       - ./services/php/etc/php7.1.13.ini:/usr/local/etc/php/conf.d/php7.1.13.ini
@@ -40,14 +41,13 @@ services:
         - code-network  
   mongodb:
     image: mongo:latest
+    restart: always
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/data/logs
-      - MONGODB_DATABASE="fecshop"
-      - MONGODB_USER="fecshop" 
-      - MONGODB_PASS="fecshop123"
     volumes:
       - ./db/mongodb/data:/data/db
+      - ./db/mongodb/example_db:/data/example_db
       - ./db/mongodb/logs:/data/logs
       - ./db/mongodb/etc/mongod.conf:/etc/mongod.conf
     ports:
@@ -57,19 +57,29 @@ services:
   
   xunsearch:
     image: hightman/xunsearch:latest
+    restart: always
     volumes:
       - ./db/xunsearch/data:/usr/local/xunsearch/data  
     networks:
       - code-network 
   redis:
     image: redis
+    restart: always
     ports:
       - "6379:6379"
     environment:
-      - REDIS_PASSWORD="123456789"
+        REDIS_PASS_FILE: /run/secrets/redis-password
+    command: [
+      "bash", "-c",
+      '
+       docker-entrypoint.sh
+       --requirepass "$$(cat $$REDIS_PASS_FILE)"
+      '
+    ]
     volumes:
       - ./db/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf 
       - ./db/redis/data:/data 
+      - ./db/redis/etc/redis-password:/run/secrets/redis-password 
     networks:
       - code-network 
 networks:

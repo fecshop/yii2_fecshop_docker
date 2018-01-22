@@ -203,12 +203,33 @@ cd /www/web
 // 将`1.3.0.3` 替换成相应的fecshop版本。下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
 composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
 cd fecshop   
-./init
 
 ```
 
-如果上面composer 安装太慢，可以使用 [composer 中国镜像](http://www.fancyecommerce.com/2017/04/19/composer-%E9%BB%98%E8%AE%A4%E5%9C%B0%E5%9D%80%E6%94%B9%E4%B8%BA%E4%B8%AD%E5%9B%BD%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80%EF%BC%8C%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%9B%BD%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80/)
+3.1.2 yii2_mongodb扩展bug的处理
 
+另开一个xshell窗口，在宿主主机  ./app/fecshop中打开composer.json，在require中加入
+`"yiisoft/yii2-mongodb": "dev-master"`, 如下：
+
+```
+"require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2-mongodb": "dev-master",  // 将前面的这个配置加入进去即可。
+        
+        ...
+    },
+```
+
+然后执行：
+
+```
+composer update
+./init
+```
+
+
+
+其他详细参看文件：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
 
 3.2 百度云盘完整版
 
@@ -219,13 +240,148 @@ cd fecshop
 那么将文件解压到宿主机 `./app/` 下面即可，将文件夹的名字改成`fecshop`
 ，完成后  `./app/fecshop` 就是fecshop系统包的根目录
 
+```
+cd fecshop   
+./init
+```
+
+其他详细参看文件：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
 
 
-3.3 下面配置fecshop
+
+4 下面配置fecshop
+
+
+详细步骤，详细参考：[Fecshop 初始配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)
+
+为了更方便的配置，Terry在 `./example_data/` 中已经进行了一些默认配置，
+您可以使用默认配置先搭建起来，然后在按照自己的需要进行更改。
+下面介绍的是在`./example_data/`里面的各个配置和其他的一些东西，
+您可以进入`./example_data/`文件件，
+将默认的配置覆盖到fecshop中。
+
+进入`./example_data/`文件，执行：
+
+```
+// 复制配置文件，也就是下面的各个store 域名 以及数据库配置
+\cp -rf ./fecshop/* ../app/fecshop/
+```
+
+将 ./example_img_and_db_data/mysql_fecshop.sql 导入到mysql的fecshop数据库中
 
 
 
+4.1本机（浏览器所在的电脑，也就是您的window本机），添加host(打开C:\Windows\System32\drivers\etc\hosts，添加如下代码,如果是其他IP，将 127.0.0.1 替换成其他IP即可。)
 
+```
+127.0.0.1       my.fecshop.com       # mysql的phpmyadmin的域名指向
+127.0.0.1       appadmin.fecshop.com # 后台域名指向
+127.0.0.1       appfront.fecshop.com # 前台pc端域名指向
+127.0.0.1       appfront.fecshop.es  # 前台pc端 es 语言的域名指向
+127.0.0.1       apphtml5.fecshop.com # 前台html端的域名指向
+127.0.0.1       appapi.fecshop.com   # api端的域名指向
+127.0.0.1       appserver.fecshop.com # server端的域名指向
+127.0.0.1       img.fecshop.com		#appimage/common   图片的域名指向
+127.0.0.1       img2.fecshop.com	#appimage/appadmin 图片的域名指向
+127.0.0.1       img3.fecshop.com	#appimage/appfront 图片的域名指向
+127.0.0.1       img4.fecshop.com	#appimage/apphtml5 图片的域名指向
+127.0.0.1       img5.fecshop.com	#appimage/appserver图片的域名指向
+```
+
+4.2、配置数据库部分：common/config/main-local.php
+
+
+4.3配置图片部分的域名
+
+打开文件：`./app/fecshop/common/config/fecshop_local_services/Image.php`
+
+
+4.4nginx做路径指向设置
+
+nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
+已经配置好域名部分
+
+4.5Store的配置
+
+`./example/fecshop/` 下三个入口的store配置
+
+```
+@appfront/config/fecshop_local_services/Store.php 
+
+@apphtml5/config/fecshop_local_services/Store.php 
+
+@appserver/config/fecshop_local_services/Store.php 
+```
+
+5.
+
+
+5.1创建mysql数据库
+
+在根目录下执行，进入mysql的容器
+
+```
+docker-compose exec mysql bash
+```
+
+执行`mysql -uroot -p` 进入mysql
+
+```
+use fecshop;
+create database fecshop;
+show databases;
+```
+
+5.2 Yii2 migratge方式导入表结构。
+
+
+mysql(导入mysql的表，数据，索引):
+
+```
+./yii migrate --interactive=0 --migrationPath=@fecshop/migrations/mysqldb
+```
+
+mongodb(导入mongodb的表，数据，索引):
+
+```
+./yii mongodb-migrate  --interactive=0 --migrationPath=@fecshop/migrations/mongodb
+```
+
+6.测试数据
+
+6.1示例图片解压到fecshop下面,进入example_data文件夹下：
+
+```
+unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
+```
+6.2安装mongodb数据库的测试数据
+
+在根目录下（github下载完成后的文件夹下）进入mongodb容器
+
+```
+docker-compose exec mongodb bash
+```
+
+```
+mongo mongodb:27017/fecshop --quiet /data/example_db/mongo-fecshop_test-20170419-065157.js
+```
+
+执行exit退出容器
+
+6.3安装mysql数据库的测试数据
+
+5.1在根目录下执行，进入mysql的容器
+
+```
+docker-compose exec mysql bash
+```
+
+执行`mysql -uroot -p` 进入mysql
+
+```
+use fecshop;
+source /var/example_db/mysql_fecshop.sql
+```
 
 
 
