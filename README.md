@@ -402,7 +402,10 @@ exit
 
 9.初始化搜索引擎数据
 
-(fecshop 1.3.0.3后面的版本不需要操作)在宿主主机将   ./app/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini
+> 由于yii2-xunsearch的host配置方式，不是在组件中配置，而是在search.ini配置文件中配置（这个地方感觉很不舒服，也只能这样），因此需要更改
+> ,这个部分的代码后面新版本会更改，目前的fecshop 1.3.0.3没有更改，需要手动更改，步骤如下，对于1.3.0.3之后的fecshop版本已经改好，不需要操作下面的更改
+
+./app/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini
 
 ```
 ;server.index = 8383
