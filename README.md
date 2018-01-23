@@ -250,6 +250,8 @@ cd fecshop
 ./init
 ```
 
+完成后，使用`exit`退出php的docker容器
+
 > 参考资料：[Fecshop 安装](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-hand-install.html)
 
 
@@ -318,9 +320,9 @@ cd fecshop
 进入`./example_data/`文件，执行：
 
 ```
-// 复制配置文件，也就是下面的各个store 域名 以及数据库配置
+// 复制配置文件到fecshop目录，也就是上面3步骤中的各个store 域名 以及数据库配置文件，复制到./app/fecshop目录中
 \cp -rf ./fecshop/* ../app/fecshop/
-// 解压产品图片
+// 解压产品图片到./app/fecshop目录中
 unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
 ```
 
