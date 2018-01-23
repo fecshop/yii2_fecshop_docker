@@ -492,6 +492,15 @@ OK,fecshop docker compose的安装过程完成了。
 是不是，so easy？，，，，妈妈再也不用担心我繁琐的安装fecshop了。
 
 
+### GUI访问数据库
 
+1.mongodb的访问
+
+推荐使用RoboMongo，下载地址为：https://robomongo.org/download
+，支持使用ssh方式访问mongodb
+
+2.mysql的访问
+
+使用phpmyadmin
 
 
