@@ -397,14 +397,7 @@ exit
 
 9.初始化搜索引擎数据
 
-在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
-
-```
-docker-compose exec php bash
-cd /www/web/fecshop/vendor/fancyecommerce/fecshop/shell/search
-sh fullSearchSync.sh
-```
-如果出现报错，将   /www/web/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini
+(fecshop 1.3.0.3后面的版本不需要操作)在宿主主机将   ./app/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini
 
 ```
 ;server.index = 8383
@@ -418,7 +411,25 @@ server.index = xunsearch:8383
 server.search = xunsearch:8384
 ```
 
-然后，重新执行上面的命令即可。
+然后在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
+
+1. ubuntu 6.10 开始，ubuntu 就将先前默认的bash shell 更换成了dash shell；其表现为 /bin/sh 链接倒了/bin/dash而不是传统的/bin/bash。详细参看： http://blog.csdn.net/liuqinglong_along/article/details/52191382
+修改：
+
+```
+dpkg-reconfigure dash
+然后填写no，
+```
+
+2.然后执行
+
+```
+docker-compose exec php bash
+cd /www/web/fecshop/vendor/fancyecommerce/fecshop/shell/search
+sh fullSearchSync.sh    //ubuntu下面用bash  
+```
+
+
 
 
 10.后台的默认用户名密码
