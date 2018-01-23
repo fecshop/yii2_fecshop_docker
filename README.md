@@ -620,6 +620,8 @@ networks:
 
 1.3下载robomongo，打开mongodb connects窗口。然后点击create，在弹出的窗口中有connection，ssh 和其他的tab块
 
+![](333.png)
+
 1.3.1 connection中填写： type：`redirect connection`，name：`fecshop`，Addredd：`mongodb` : `27017`
 
 1.3.2 点击SSH，勾选Use SSH tunnel，然后进行如下填写：
