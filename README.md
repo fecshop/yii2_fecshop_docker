@@ -487,7 +487,9 @@ npm run build
 就可以访问：http://vue.fecshop.com
 了，因为nginx默认已经配置了这个域名，可以直接访问。
 
-OK,fecshop docker compose的安装过程完成了。  so easy，妈妈再也不用担心我繁琐的安装fecshop了。
+OK,fecshop docker compose的安装过程完成了。  
+
+是不是，so easy？，，，，妈妈再也不用担心我繁琐的安装fecshop了。
 
 
 
