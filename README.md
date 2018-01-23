@@ -478,12 +478,16 @@ console： `对于console的执行，需要进入php的容器，在 /www/web/fec
 ，进行下载，安装环境
 
 
-2.操作到第7步完成后，进行下面的配置
+2.上面的文档操作过程中，到第6步完成后，执行
+
+```
+npm run build
+```
 
 就可以访问：http://vue.fecshop.com
 了，因为nginx默认已经配置了这个域名，可以直接访问。
 
-
+OK,fecshop docker compose的安装过程完成了。  so easy，妈妈再也不用担心我繁琐的安装fecshop了。
 
 
 
