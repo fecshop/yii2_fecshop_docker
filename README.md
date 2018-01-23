@@ -405,7 +405,8 @@ exit
 > 由于yii2-xunsearch的host配置方式，不是在组件中配置，而是在search.ini配置文件中配置（这个地方感觉很不舒服，也只能这样），因此需要更改
 > ,这个部分的代码后面新版本会更改，目前的fecshop 1.3.0.3没有更改，需要手动更改，步骤如下，对于1.3.0.3之后的fecshop版本已经改好，不需要操作下面的更改
 
-./app/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini
+
+在宿主主机打开文件：`./app/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini`
 
 ```
 ;server.index = 8383
@@ -419,9 +420,15 @@ server.index = xunsearch:8383
 server.search = xunsearch:8384
 ```
 
-然后在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
+9.2然后在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
 
-1. ubuntu 6.10 开始，ubuntu 就将先前默认的bash shell 更换成了dash shell；其表现为 /bin/sh 链接倒了/bin/dash而不是传统的/bin/bash。详细参看： http://blog.csdn.net/liuqinglong_along/article/details/52191382
+```
+docker-compose exec php bash
+```
+
+> ubuntu 6.10 开始，ubuntu 就将先前默认的bash shell 更换成了dash shell；其表现为 /bin/sh 链接倒了/bin/dash而不是传统的/bin/bash。
+> 详细参看： http://blog.csdn.net/liuqinglong_along/article/details/52191382
+
 修改：
 
 ```
@@ -429,89 +436,52 @@ dpkg-reconfigure dash
 然后填写no，
 ```
 
-2.然后执行
+9.3.然后执行
 
 ```
-docker-compose exec php bash
+
 cd /www/web/fecshop/vendor/fancyecommerce/fecshop/shell/search
 sh fullSearchSync.sh    //ubuntu下面用bash  
 ```
 
-
+如果没有报错，就完成了，执行`exit`退出php容器。
 
 
 10.后台的默认用户名密码
 
-```
-admin
-admin123
-```
+可以访问各个入口了,如果您的域名配置是上面的默认配置那么：
+
+前端pc: `appfront.fecshop.com`
+
+前端html5：`appfront.fecshop.com`
+
+appapi： `appfront.fecshop.com`
+
+appserver: `appfront.fecshop.com`
+
+后台appadmin： `appfront.fecshop.com` , 后台的账户密码： `admin`  `admin123`
+
+
+console： `对于console的执行，需要进入php的容器，在 /www/web/fecshop中执行。`
+
 
 
 ### 安装VUE部分
 
+> VUE的数据提供部分是上面的appserver入口提供的api，因此，需要上面的配置完成后，才可以配置下面的vue部分
 
-1.进入 yii2_fecshop_docker 
-，参看文档：https://github.com/fecshop/vue_fecshop_appserver
-，进行安装
+在宿主主机中操作：
 
+1.进入 `yii2_fecshop_docker/app `, 也就是将 vue_fecshop_appserver 下载到`yii2_fecshop_docker/app/ `下面
 
-2.操作到第4步后，进行下面的配置
-
-
-2.1.src/config/store.js
-
-将 `demo.fancyecommerce.com` 改成 `vue.fecshop.com`
-
-2.2.config/prod.env.js
-
-将 
-
-```
-module.exports = {
-  NODE_ENV: '"production"',
-  API_ROOT: '"//fecshop.appserver.fancyecommerce.com"',
-  WEBSITE_ROOT: '"http://demo.fancyecommerce.com"'
-}
-```
-
-改成：
-
-```
-module.exports = {
-  NODE_ENV: '"production"',
-  API_ROOT: '"//appserver.fecshop.com"',
-  WEBSITE_ROOT: '"http://vue.fecshop.com"'
-}
-```
-
-2.3.config/dev.env.js
-
-将 
-
-```
-module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"',
-  API_ROOT: '"//fecshop.appserver.fancyecommerce.com"',
-  WEBSITE_ROOT: '"//demo.fancyecommerce.com"'
-})
-```
-
-改成：
-
-```
-module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"',
-  API_ROOT: '"//appserver.fecshop.com"',
-  WEBSITE_ROOT: '"http://vue.fecshop.com"'
-})
-```
+参看文档：https://github.com/fecshop/vue_fecshop_appserver
+，进行下载，安装环境
 
 
+2.操作到第7步完成后，进行下面的配置
 
-2.4执行`npm run build`
-
-2.5访问：http://vue.fecshop.com
+就可以访问：http://vue.fecshop.com
+了，因为nginx默认已经配置了这个域名，可以直接访问。
 
 
 
