@@ -344,7 +344,7 @@ exit;
 5.2 Yii2 migratge方式导入表结构。
 
 ```
-docker-compose execphp bash
+docker-compose exec php bash
 cd /www/web/fecshop
 ```
 mysql(导入mysql的表，数据，索引):
