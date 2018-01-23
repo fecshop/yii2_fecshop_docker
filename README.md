@@ -642,4 +642,9 @@ User Password：填写上面1.2部分，在文件./services/ssh/docker/Dockerfil
 
 使用phpmyadmin
 
+下载一个phpmyadmin，文件夹命名为：phpmyadmin。把文件夹放到  ./app/下面，也就是./app/phpmyadmin，
+nginx下的配置文件已经配置好,nginx配置文件为：
+`/services/web/nginx/conf/conf.d/default.conf`
+
+访问：my.fecshop.com 即可访问。
 
