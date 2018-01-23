@@ -273,17 +273,13 @@ cd fecshop
 ,将mysql的密码，redis的密码，以及redis在session cache中使用的密码，都配置一下，
 密码使用上面进设置的密码。
 
-3.配置图片部分的域名（**使用默认即可，如果您要自定义域名，需要修改**）
+3.配置域名 **默认对应1步骤的host对应的域名，使用默认即可，如果您要自定义域名，才需要修改**
 
-文件：`./app/fecshop/common/config/fecshop_local_services/Image.php`
+3.1配置图片部分的域名：`./app/fecshop/common/config/fecshop_local_services/Image.php`
 
+3.2nginx做路径指向设置，配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 
-4、nginx做路径指向设置
-
-配置文件为`./services/web/nginx/conf/conf.d/default.conf`
-（**已经配置好域名部分使用默认即可，如果您要自定义域名，需要修改**）
-
-5、Store的配置（**使用默认即可，如果您要自定义域名，需要修改**）
+3.3Store的配置：
 
 `./example/fecshop/` 下三个入口的store配置
 
@@ -296,22 +292,21 @@ cd fecshop
 ```
 
 
-6.例子数据修改完成后，复制到fecshop文件夹中
+4.例子数据修改完成后，复制到fecshop文件夹中
 
 进入`./example_data/`文件，执行：
 
 ```
 // 复制配置文件，也就是下面的各个store 域名 以及数据库配置
 \cp -rf ./fecshop/* ../app/fecshop/
+// 解压产品图片
 unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
 ```
 
 
+5.创建mysql数据库
 
-
-7.创建mysql数据库
-
-7.1在根目录（./yii2_fecshop_docker）下执行，进入mysql的容器
+5.1在根目录（./yii2_fecshop_docker）下执行，进入mysql的容器
 
 ```
 docker-compose exec mysql bash
@@ -326,11 +321,14 @@ show databases;
 exit;
 ```
 
-exit，退出容器
+`exit`，退出容器,回到宿主主机
 
-7.2 Yii2 migratge方式导入表结构。
+5.2 Yii2 migratge方式导入表结构。
 
-
+```
+docker-compose execphp bash
+cd /www/web/fecshop
+```
 mysql(导入mysql的表，数据，索引):
 
 ```
@@ -343,9 +341,11 @@ mongodb(导入mongodb的表，数据，索引):
 ./yii mongodb-migrate  --interactive=0 --migrationPath=@fecshop/migrations/mongodb
 ```
 
-8.测试数据
+`exit`，退出容器,回到宿主主机
 
-8.1安装mongodb数据库的测试数据
+6.测试数据
+
+6.1安装mongodb数据库的测试数据
 
 在根目录下（github下载完成后的文件夹下）进入mongodb容器
 
@@ -357,9 +357,9 @@ docker-compose exec mongodb bash
 mongo mongodb:27017/fecshop --quiet /data/example_db/mongo-fecshop_test-20170419-065157.js
 ```
 
-执行exit退出容器
+`exit`，退出容器,回到宿主主机
 
-8.2安装mysql数据库的测试数据
+6.2安装mysql数据库的测试数据
 
 在根目录(docker-compose.yml文件所在目录)下执行，进入mysql的容器
 
@@ -375,7 +375,7 @@ source /var/example_db/mysql_fecshop.sql
 exit
 ```
 
-执行exit退出容器
+`exit`，退出容器,回到宿主主机
 
 9.初始化搜索引擎数据
 
@@ -386,6 +386,21 @@ docker-compose exec php bash
 cd /www/web/fecshop/vendor/fancyecommerce/fecshop/shell/search
 sh fullSearchSync.sh
 ```
+如果出现报错，将   /www/web/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini
+
+```
+;server.index = 8383
+;server.search = 8384
+```
+
+改成
+
+```
+server.index = xunsearch:8383
+server.search = xunsearch:8384
+```
+
+然后，重新执行上面的命令即可。
 
 
 10.后台的默认用户名密码
