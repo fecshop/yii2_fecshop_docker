@@ -642,9 +642,24 @@ User Password：填写上面1.2部分，在文件./services/ssh/docker/Dockerfil
 
 使用phpmyadmin
 
-下载一个phpmyadmin，文件夹命名为：phpmyadmin。把文件夹放到  ./app/下面，也就是./app/phpmyadmin，
-nginx下的配置文件已经配置好,nginx配置文件为：
+```
+cd ./app
+wget https://files.phpmyadmin.net/phpMyAdmin/4.7.7/phpMyAdmin-4.7.7-all-languages.zip
+unzip phpMyAdmin-4.7.7-all-languages.zip
+mv phpMyAdmin-4.7.7-all-languages  phpmyadmin
+cd phpmyadmin/
+vim libraries/config.default.php
+//打开文件后，大约117行处，将
+$cfg['Servers'][$i]['host'] = 'localhost';
+改成
+$cfg['Servers'][$i]['host'] = 'mysql';
+保存退出即可
+```
+
+访问：my.fecshop.com 即可，mysql的密码就是docker-compose.yml文件中创建mysql容器的密码。
+
+> 对于 my.fecshop.com，nginx下的配置文件已经配置好,nginx配置文件为：
 `/services/web/nginx/conf/conf.d/default.conf`
 
-访问：my.fecshop.com 即可访问。
+OK，是不是so easy？ 不光妈妈，就连爸爸也不担心我繁琐的配置fecshop的环境，^-^,,
 
