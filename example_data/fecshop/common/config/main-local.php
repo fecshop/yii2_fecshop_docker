@@ -24,7 +24,7 @@ return [
             'class' => 'yii\redis\Connection',
             'hostname' => 'redis',    // redis的host
             'port' => 6379,               // redis的端口     
-			'password'  => '123456789', // redis的密码
+			'password'  => '12345GESAFsfdtewS4G6789', // redis的密码
             'database' => 0,    // redis的库，此处不要改动
         ],
         // Cache 组件的配置，您需要配置下面的redis
@@ -34,7 +34,7 @@ return [
             'redis' => [
                 'hostname' => 'redis',   // redis的host
                 'port' => 6379,              // redis的端口   
-                'password'  => '123456789', // redis的密码
+                'password'  => '12345GESAFsfdtewS4G6789', // redis的密码
             ],
         ],
         // Session 组件的配置，您需要配置下面的redis
@@ -46,7 +46,7 @@ return [
             'redis' => [
                 'hostname' => 'redis', // redis的host
                 'port' => 6379,            // redis的端口   
-                'password'  => '123456789', // redis的密码
+                'password'  => '12345GESAFsfdtewS4G6789', // redis的密码
             ],
         ],
 
