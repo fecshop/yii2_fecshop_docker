@@ -499,6 +499,143 @@ OK,fecshop docker compose的安装过程完成了。
 推荐使用RoboMongo，下载地址为：https://robomongo.org/download
 ，支持使用ssh方式访问mongodb
 
+默认的方式是无法连接的，我们需要搭建一个ssh的容器，通过这个容器连接mongodb
+
+1.1 本部分参考的教程为：[Dockerize an SSH service](https://docs.docker.com/engine/examples/running_ssh_service/#build-an-eg_sshd-image)
+
+1.2 打开文件：./services/ssh/docker/Dockerfile , 找到配置行：`RUN echo 'root:setyoupasss22XXXcreencast' | chpasswd`
+,将`setyoupasss22XXXcreencast` 改成您自己的root密码，切记，这里一定要修改，！！！这里一定要修改，！！！
+这里一定要修改，！！！
+
+1.3 打开根目录的 `docker-compose.yml`, 在配置的services中加入：
+
+```
+ssh1:  
+    build: 
+      context: ./services/ssh/docker/
+    networks:
+      - code-network 
+    ports:
+      - "2222:22"
+```
+
+加入后的完整配置如下：
+
+```
+version: "2"  
+services:  
+  web:  
+    image: nginx  
+    ports:  
+      - "80:80" 
+    restart: always
+    volumes:  
+      - ./app:/www/web
+      - ./services/web/nginx/conf:/etc/nginx
+      - ./services/web/nginx/logs:/www/web_logs
+    networks:
+        - code-network
+    depends_on:
+      - php
+  mysql:  
+    image: mysql 
+    restart: always
+    volumes:  
+      - ./db/mysql/data:/var/lib/mysql 
+      - ./db/mysql/example_db:/var/example_db 
+      - ./db/mysql/conf.d:/etc/mysql/conf.d      
+    ports:  
+      - "3306:3306" 
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
+    networks:
+      - code-network 
+  php:  
+    build: 
+      context: ./services/php/docker/
+    restart: always
+    volumes:  
+      - ./app:/www/web
+      - ./services/php/etc/php7.1.13.ini:/usr/local/etc/php/conf.d/php7.1.13.ini
+    depends_on:
+      - mongodb
+      - mysql
+    networks:
+        - code-network  
+  mongodb:
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/data/logs
+    volumes:
+      - ./db/mongodb/data:/data/db
+      - ./db/mongodb/example_db:/data/example_db
+      - ./db/mongodb/logs:/data/logs
+      - ./db/mongodb/etc/mongod.conf:/etc/mongod.conf
+    ports:
+      - 27017:27017 
+    networks:
+      - code-network 
+  
+  xunsearch:
+    image: hightman/xunsearch:latest
+    restart: always
+    volumes:
+      - ./db/xunsearch/data:/usr/local/xunsearch/data  
+    networks:
+      - code-network 
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+        REDIS_PASS_FILE: /run/secrets/redis-password
+    command: [
+      "bash", "-c",
+      '
+       docker-entrypoint.sh
+       --requirepass "$$(cat $$REDIS_PASS_FILE)"
+      '
+    ]
+    volumes:
+      - ./db/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf 
+      - ./db/redis/data:/data 
+      - ./db/redis/etc/redis-password:/run/secrets/redis-password 
+    networks:
+      - code-network 
+  ssh1:  
+    build: 
+      context: ./services/ssh/docker/
+    networks:
+      - code-network 
+    ports:
+      - "2222:22"
+networks:
+  code-network:
+    driver: bridge
+```
+
+1.3下载robomongo，打开mongodb connects窗口。然后点击create，在弹出的窗口中有connection，ssh 和其他的tab块
+
+1.3.1 connection中填写： type：`redirect connection`，name：`fecshop`，Addredd：`mongodb` : `27017`
+
+1.3.2 点击SSH，勾选Use SSH tunnel，然后进行如下填写：
+
+
+ssh address ： `您的主机IP`：`2222`
+
+ssh User Name : `root`
+
+ssh Auth Method: 选择`password`方式
+
+User Password：填写上面1.2部分，在文件./services/ssh/docker/Dockerfile
+中填写的`密码`
+
+点击save ，然后进行连接即可
+
 2.mysql的访问
 
 使用phpmyadmin
