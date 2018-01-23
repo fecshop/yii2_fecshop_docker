@@ -206,6 +206,9 @@ composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
    
 ```
 
+如果上面的composer安装报错：composer安装fxp插件时候内存不足提示提示Fatal error: Uncaught exception 'ErrorException' with message 'proc_open(): fork failed - Cannot allocate memory' in phar，说明内存不够，参看这里解决：
+http://www.fecshop.com/topic/612
+
 2.1.2 yii2_mongodb扩展bug的处理（官方还未发布新版本）
 
 另开一个xshell窗口，在宿主主机  ./app/fecshop中打开composer.json，在require中加入
