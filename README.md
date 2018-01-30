@@ -675,15 +675,11 @@ OK，是不是so easy？ 不光妈妈，就连爸爸也不担心我繁琐的配�
 
 QA:
 
-1.安装的时候，在构建php的时候报错
+1.安装的时候，在构建php的时候报错，怎么办？
 
-答：您可以将文件 	docker-compose.yml.phpimage 的内容复制到  	docker-compose.yml 中，然后执行下面的命名构建
+答：您可以将文件 	docker-compose.yml.php.aliyun （国外服务器将 	docker-compose.yml.php.hub文件）的内容复制到  	docker-compose.yml 中，然后执行下面的命名构建
 
 ```
 docker-compose build --no-cache
 ```
-如果执行成功，在按照上面的步骤执行，譬如启动
-
-```
-docker-compose up -d
-```
+上面使用的是阿里云构建好了的php镜像，直接下载使用接口
