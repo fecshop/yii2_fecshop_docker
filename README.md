@@ -525,7 +525,7 @@ ssh1:
       - "2222:22"
 ```
 
-加入后的完整配置如下：
+加入后的配置示例如下（下面只是给一个例子参考，切勿复制下面的文件覆盖你的docker-compose.yml）：
 
 ```
 version: "2"  
@@ -543,55 +543,7 @@ services:
         - code-network
     depends_on:
       - php
-  mysql:  
-    image: mysql 
-    restart: always
-    volumes:  
-      - ./db/mysql/data:/var/lib/mysql 
-      - ./db/mysql/example_db:/var/example_db 
-      - ./db/mysql/conf.d:/etc/mysql/conf.d      
-    ports:  
-      - "3306:3306" 
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
-    networks:
-      - code-network 
-  php:  
-    build: 
-      context: ./services/php/docker/
-    restart: always
-    volumes:  
-      - ./app:/www/web
-      - ./services/php/etc/php7.1.13.ini:/usr/local/etc/php/conf.d/php7.1.13.ini
-    depends_on:
-      - mongodb
-      - mysql
-    networks:
-        - code-network  
-  mongodb:
-    image: mongo:latest
-    restart: always
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/data/logs
-    volumes:
-      - ./db/mongodb/data:/data/db
-      - ./db/mongodb/example_db:/data/example_db
-      - ./db/mongodb/logs:/data/logs
-      - ./db/mongodb/etc/mongod.conf:/etc/mongod.conf
-    ports:
-      - 27017:27017 
-    networks:
-      - code-network 
-  
-  xunsearch:
-    image: hightman/xunsearch:latest
-    restart: always
-    volumes:
-      - ./db/xunsearch/data:/usr/local/xunsearch/data  
-    networks:
-      - code-network 
+  ...  // 省略
   redis:
     image: redis
     restart: always
