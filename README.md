@@ -677,9 +677,11 @@ QA:
 
 1.安装的时候，在构建php的时候报错，怎么办？
 
-答：您可以将文件 	docker-compose.yml.php.aliyun （国外服务器将 	docker-compose.yml.php.hub文件）的内容复制到  	docker-compose.yml 中，然后执行下面的命名构建
+答：您可以将文件 	docker-compose.yml.php.aliyun 的内容复制到  	docker-compose.yml 中，然后执行下面的命名构建
 
 ```
 docker-compose build --no-cache
 ```
-上面使用的是阿里云构建好了的php镜像，直接下载使用接口
+docker-compose.yml.php.aliyun中添加了做好了的php镜像，地址放到了阿里云docker镜像中心，国内建议使用该文件
+
+docker-compose.yml.php.hub： php镜像放到了hub.docker.com ，国外服务器使用该地址
