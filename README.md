@@ -669,3 +669,21 @@ $cfg['Servers'][$i]['host'] = 'mysql';
 
 OK，是不是so easy？ 不光妈妈，就连爸爸也不担心我繁琐的配置fecshop的环境，^-^,,
 
+
+
+---------------------------------------------------------------------------
+
+QA:
+
+1.安装的时候，在构建php的时候报错
+
+答：您可以将文件 	docker-compose.yml.phpimage 的内容复制到  	docker-compose.yml 中，然后执行下面的命名构建
+
+```
+docker-compose build --no-cache
+```
+如果执行成功，在按照上面的步骤执行，譬如启动
+
+```
+docker-compose up -d
+```
