@@ -131,6 +131,17 @@ mysql和redis的密码要记住，后面配置要用到。
 docker-compose build
 ```
 
+1.如果这个过程中，php构建出现问题，那么您可以直接将文件docker-compose.yml.php.aliyun中的内容复制到docker-compose.yml，
+这个文件使用的是一个构建好了的php镜像（在阿里云docker镜像中心），而不是自己构建。曾经有人遇到过这个问题，估计是网络问题：http://www.fecshop.com/topic/641
+
+2.docker容器的build过程，镜像都是从hub.docker.com中心下载，会比较慢，如果下载失败，您可以从阿里云的docker镜像中心下载，我已经都上传了一份到阿里云docker镜像，地址为：https://dev.aliyun.com/list.html?namePrefix=fecshopsoft
+，这是一个列表，点击每一个进去，可以看到镜像地址，点击复制地址按钮，复制出来后，把`docker pull`部分去掉，后面的字符就是这个镜像的地址，
+
+以xunsearch为例，点击fecshopsoft/xunsearch,进入到页面：https://dev.aliyun.com/detail.html?spm=5176.1972343.2.10.cPwTqk&repoId=116558 ，在这个页面点击复制地址，复制出来的
+内容为：`docker pull registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch` ，
+,然后打开docker-compose.yml，将`hightman/xunsearch:latest` 替换成`registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch`就完成了build的时候将从阿里云docker镜像下载，国内速度会快很多。
+
+
 完成后，运行：
 
 ```
@@ -197,12 +208,6 @@ docker-compose stop
 
 `docker-compose up -d`
 
-上述安装过程，都是冲hub.docker.com中心下载，会比较慢，如果下载失败，您可以从阿里云的docker镜像中心下载，我已经都上传了一份到阿里云docker镜像，地址为：https://dev.aliyun.com/list.html?namePrefix=fecshopsoft
-，这是一个列表，点击每一个进去，可以看到镜像地址，点击复制地址按钮，复制出来后，把`docker pull`部分去掉，后面的字符就是这个镜像的地址，
-
-以xunsearch为例，点击fecshopsoft/xunsearch,进入到页面：https://dev.aliyun.com/detail.html?spm=5176.1972343.2.10.cPwTqk&repoId=116558 ，在这个页面点击复制地址，复制出来的
-内容为：`docker pull registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch` ，
-,然后打开docker-compose.yml，将`hightman/xunsearch:latest` 替换成`registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch`就完成了build的时候将从阿里云docker镜像下载，国内速度会快很多。
 
 
 2、composer 安装fecshop
