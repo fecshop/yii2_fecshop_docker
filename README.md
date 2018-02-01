@@ -197,6 +197,12 @@ docker-compose stop
 
 `docker-compose up -d`
 
+上述安装过程，都是冲hub.docker.com中心下载，会比较慢，如果下载失败，您可以从阿里云的docker镜像中心下载，我已经都上传了一份到阿里云docker镜像，地址为：https://dev.aliyun.com/list.html?namePrefix=fecshopsoft
+，这是一个列表，点击每一个进去，可以看到镜像地址，点击复制地址按钮，复制出来后，把`docker pull`部分去掉，后面的字符就是这个镜像的地址，
+
+以xunsearch为例，点击fecshopsoft/xunsearch,进入到页面：https://dev.aliyun.com/detail.html?spm=5176.1972343.2.10.cPwTqk&repoId=116558 ，在这个页面点击复制地址，复制出来的
+内容为：`docker pull registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch` ，
+,然后打开docker-compose.yml，将`hightman/xunsearch:latest` 替换成`registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch`就完成了build的时候将从阿里云docker镜像下载，国内速度会快很多。
 
 
 2、composer 安装fecshop
