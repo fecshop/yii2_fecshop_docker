@@ -1,7 +1,7 @@
 version: "2"   
 services:  
   web:  
-    image: nginx  
+    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/nginx  
     ports:  
       - "80:80" 
     restart: always
@@ -14,7 +14,7 @@ services:
     depends_on:
       - php
   mysql:  
-    image: mysql 
+    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/mysql 
     restart: always
     volumes:  
       - ./db/mysql/data:/var/lib/mysql 
@@ -39,7 +39,7 @@ services:
     networks:
         - code-network  
   mongodb:
-    image: mongo:latest
+    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/mongo
     restart: always
     environment:
       - MONGO_DATA_DIR=/data/db
@@ -55,14 +55,14 @@ services:
       - code-network 
   
   xunsearch:
-    image: hightman/xunsearch:latest
+    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/xunsearch
     restart: always
     volumes:
       - ./db/xunsearch/data:/usr/local/xunsearch/data  
     networks:
       - code-network 
   redis:
-    image: redis
+    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/redis
     restart: always
     ports:
       - "6379:6379"
