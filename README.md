@@ -213,30 +213,14 @@ docker-compose stop
 docker-compose exec php  bash
 // 进入成功后，在php容器中执行：
 cd /www/web
-// 将`1.3.0.3` 替换成相应的fecshop版本。下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
-composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.3.0.3
+// 将`1.4.1.0` 替换成相应的fecshop版本。下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
+composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.4.1.0
    
 ```
 
 如果上面的composer安装报错：composer安装fxp插件时候内存不足提示提示Fatal error: Uncaught exception 'ErrorException' with message 'proc_open(): fork failed - Cannot allocate memory' in phar，说明内存不够，参看这里解决：
 http://www.fecshop.com/topic/612
 
-2.1.2 yii2_mongodb扩展bug的处理（官方还未发布新版本）
-
-另开一个xshell窗口，在宿主主机  ./app/fecshop中打开composer.json，在require中加入
-`"yiisoft/yii2-mongodb": "dev-master"`, 如下：
-
-```
-"require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2-mongodb": "dev-master",  // 将前面的这个配置加入进去即可。
-        
-        ...
-    },
-```
-保存退出
-，
-回到3.1部分的xshell窗口，执行：
 
 ```
 cd fecshop
