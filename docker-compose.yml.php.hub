@@ -14,7 +14,7 @@ services:
     depends_on:
       - php
   mysql:  
-    image: mysql 
+    image: mysql:5.7 
     restart: always
     volumes:  
       - ./db/mysql/data:/var/lib/mysql 
