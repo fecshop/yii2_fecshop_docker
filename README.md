@@ -18,7 +18,7 @@ Fecshop Docker
 ---------
 
 
-`./app`: 这里是代码文件，fecshop的代码文件放到这里
+`./app`: 这里是代码文件，fecshop的代码文件放到这里（打开后发现里面没有文件，这是因为fecshop的文件是需要composer安装后才有会的，因此，严格按照下面的操作步骤执行就好）,在后面又有安装步骤，进入php容器后，使用composer安装fecshop后，文件就在 ./app/fecshop文件下面
 
 `./db`: 这里是环境部分-数据库部分
 
