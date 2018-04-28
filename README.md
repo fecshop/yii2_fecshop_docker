@@ -258,14 +258,13 @@ cd fecshop
 > 参考：[Fecshop 初始配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)
 
 > 为了更方便的配置，Terry在 `./example_data/` 中已经进行了一些默认配置，
-> 您可以使用默认配置先搭建起来，然后在按照自己的需要进行更改。
-> 下面介绍的是在`./example_data/`里面的各个配置和其他的一些东西，
-> 您可以进入`./example_data/`文件件，
-> 将默认的配置覆盖到fecshop中。
+> 您可以按照自己的需要，在默认配置的基础上修改一部分配置，譬如数据库，域名等，然后将`./example_data/fecshop/*`的内容覆盖到`./app/fecshop`中，
+> 下面介绍的是在`./example_data/`里面修改各个配置，然后将配置覆盖到`./app/fecshop`中
 
 
 
-1、本机（浏览器所在的电脑，也就是您的window本机），添加host(打开C:\Windows\System32\drivers\etc\hosts，添加如下代码,如果是其他IP，将 127.0.0.1 替换成其他IP即可。)
+
+1、添加域名hosts映射（也就是用ip映射的方式弄假域名），本机（浏览器所在的电脑，也就是您的window本机），添加host(打开C:\Windows\System32\drivers\etc\hosts，添加如下代码,如果是其他IP，将 127.0.0.1 替换成其他IP即可。)
 
 ```
 127.0.0.1       my.fecshop.com       # mysql的phpmyadmin的域名指向
@@ -284,7 +283,7 @@ cd fecshop
 
 
 
-2.更改配置文件
+2.更改`./example_data`里面的配置文件
 
 > fecshop有一些列的配置，Terry在 `./example_data`下面已经进行了一些列的默认配置，你可以按照自己的需要进行修改，譬如设置一些数据库密码之类的配置，
 最后通过`cp`命令将这些配置文件覆盖到 `./app/fecshop`里面即可。
