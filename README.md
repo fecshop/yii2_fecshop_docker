@@ -286,21 +286,27 @@ cd fecshop
 
 2.更改配置文件
 
-数据库配置：
+> fecshop有一些列的配置，Terry在 `./example_data`下面已经进行了一些列的默认配置，你可以按照自己的需要进行修改，譬如设置一些数据库密码之类的配置，
+最后通过`cp`命令将这些配置文件覆盖到 `./app/fecshop`里面即可。
+
+2.1数据库配置：
 
 打开 ./example_data/fecshop/common/config/main-local.php
 ,将mysql的密码，redis的密码，以及redis在session cache中使用的密码，都配置一下，
 密码使用上面进设置的密码。
 
-3.配置域名 **默认对应1步骤的host对应的域名，使用默认即可，如果您要自定义域名，才需要修改**
+3.配置域名 **默认对应1步骤的host对应的域名(上面配置的win hosts里面的域名)，使用默认即可，如果您要自定义域名，那么修改成你自己的域名**
 
-3.1配置图片部分的域名：`./app/fecshop/common/config/fecshop_local_services/Image.php`
+> 如果您使用上面的默认域名，也就是上面配置的win hosts里面的域名，那么下面的步骤不需要操作，但是，如果您使用的阿里云这些国内的服务器厂商，他们是需要域名备案的，使用本地host映射的方式是不行的，您需要自己买个域名备案，然后才能使用，因此，您需要将fecshop里面的默认域名改成您自己的域名，您需要按照下面的步骤修改
 
-3.2nginx做路径指向设置，配置文件为`./services/web/nginx/conf/conf.d/default.conf`
+nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 
-3.3Store的配置：
 
-`./example/fecshop/` 下三个入口的store配置
+3.1修改各个入口的域名，也就是各个Store的配置
+
+首先在nginx的配置文件中修改各个入口的域名的配置
+
+然后修改fecshop中的各个域名的配置，打开 `./example_data/fecshop/`， 三个入口的store配置
 
 ```
 @appfront/config/fecshop_local_services/Store.php 
@@ -310,8 +316,16 @@ cd fecshop
 @appserver/config/fecshop_local_services/Store.php 
 ```
 
+关于域名配置的详细，您可以参考:[Fecshop配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)，的第4部分。
 
-4.例子数据修改完成后，复制到fecshop文件夹中
+3.2如果您想修改图片的域名（修改成自定义），在nginx配置中修改域名后，
+还需要到fecshop中配置图片域名，fec配置文件地址为：`./example_data/fecshop/common/config/fecshop_local_services/Image.php`
+
+上面是一个nginx配置的过程，对于不熟悉nginx的人，先去了解一下nginx知识吧。
+
+4.上面我们将配置文件修改完成了，下面，我们将配置覆盖到fecshop的目录里
+
+4.1将配置文件`./example_data/fecshop/*` 覆盖到 `./app/fecshop/`
 
 进入`./example_data/`文件，执行：
 
