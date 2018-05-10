@@ -213,7 +213,8 @@ docker-compose stop
 docker-compose exec php  bash
 // 进入成功后，在php容器中执行：
 cd /www/web
-// 将`1.4.1.0` 替换成相应的fecshop版本。下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
+// 将`1.4.1.0` 替换成相应的fecshop版本。最新的fecshop版本参看：https://github.com/fecshop/yii2_fecshop/releases
+// 下面提示需要token，参看这里获取Token：http://www.fecshop.com/topic/412
 composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.4.1.0
    
 ```
