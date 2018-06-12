@@ -225,6 +225,16 @@ composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.4.1.0
    
 ```
 
+下载的时候，如果你是第一次使用github，这个地方会卡住，提示你填写github的token，获取github token 参看帖子：http://www.fecshop.com/topic/412
+
+```
+Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+b3817f538307+2018-06-12+1503
+to retrieve a token. It will be stored in "/root/.composer/auth.json" for future use by Composer.
+Token (hidden): 
+```
+
+
+
 如果上面的composer安装报错：composer安装fxp插件时候内存不足提示提示Fatal error: Uncaught exception 'ErrorException' with message 'proc_open(): fork failed - Cannot allocate memory' in phar，说明内存不够，参看这里解决：
 http://www.fecshop.com/topic/612
 
