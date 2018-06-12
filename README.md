@@ -345,7 +345,7 @@ nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 
 4.1将配置文件`./example_data/fecshop/*` 覆盖到 `./app/fecshop/`
 
-进入`./example_data/`文件，执行：
+进入`./example_data/`文件夹，执行：
 
 ```
 // 复制配置文件到fecshop目录，也就是上面3步骤中的各个store 域名 以及数据库配置文件，复制到./app/fecshop目录中
@@ -431,25 +431,8 @@ exit
 
 9.初始化搜索引擎数据
 
-> 由于yii2-xunsearch的host配置方式，不是在组件中配置，而是在search.ini配置文件中配置（这个地方感觉很不舒服，也只能这样），因此需要更改
-> ,这个部分的代码后面新版本会更改，目前的fecshop 1.3.0.3没有更改，需要手动更改，步骤如下，对于1.3.0.3之后的fecshop版本已经改好，不需要操作下面的更改
 
-
-在宿主主机打开文件：`./app/fecshop/vendor/fancyecommerce/fecshop/config/xunsearch/search.ini`
-
-```
-;server.index = 8383
-;server.search = 8384
-```
-
-改成
-
-```
-server.index = xunsearch:8383
-server.search = xunsearch:8384
-```
-
-9.2然后在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
+在根目录(docker-compose.yml文件所在目录)下执行，进入php的容器
 
 ```
 docker-compose exec php bash
@@ -482,13 +465,13 @@ sh fullSearchSync.sh    //ubuntu下面用bash
 
 前端pc: `appfront.fecshop.com`
 
-前端html5：`appfront.fecshop.com`
+前端html5：`apphtml5.fecshop.com`
 
-appapi： `appfront.fecshop.com`
+appapi： `appapi.fecshop.com`
 
-appserver: `appfront.fecshop.com`
+appserver: `appserver.fecshop.com`
 
-后台appadmin： `appfront.fecshop.com` , 后台的账户密码： `admin`  `admin123`
+后台appadmin： `appadmin.fecshop.com` , 后台的账户密码： `admin`  `admin123`
 
 
 console： `对于console的执行，需要进入php的容器，在 /www/web/fecshop中执行。`
