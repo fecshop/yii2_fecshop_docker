@@ -10,7 +10,7 @@ Fecshop Docker
 > 通过下载镜像，自己构建镜像，把fecshop需要的各个软件以及扩展都安装好，您
 > 可以根据下面的说明操作
 
-
+如果你对docker不熟悉，可以参看 [fecshop docker 安装视频](http://www.fecshop.com/doc/fecshop-guide/instructions/cn-1.0/guide-fecshop_video_docker_install.html)
 
 
 
