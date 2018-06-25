@@ -48,7 +48,7 @@ services:
       - ./db/mongodb/data:/data/db
       - ./db/mongodb/example_db:/data/example_db
       - ./db/mongodb/logs:/data/logs
-      - ./db/mongodb/etc/mongod.conf:/etc/mongod.conf
+    command: ["mongod", "--bind_ip", "php"]
     ports:
       - 27017:27017 
     networks:
