@@ -370,26 +370,7 @@ unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
 
 > 此步骤，复制文件，非常重要，请务必保证复制成功完成, 有不少童鞋都是这个步骤导致出现各种问题的，复制完可以自己核对一下，是否复制成功
 
-5.创建mysql数据库
-
-5.1在根目录（./yii2_fecshop_docker）下执行，进入mysql的容器
-
-```
-docker-compose exec mysql bash
-```
-
-执行`mysql -uroot -p` 进入mysql
-
-```
-use fecshop;
-create database fecshop;
-show databases;
-exit;
-```
-
-`exit`，退出容器,回到宿主主机
-
-5.2 Yii2 migratge方式导入表结构。
+5.Yii2 migratge方式导入表结构。
 
 ```
 docker-compose exec php bash
