@@ -22,6 +22,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
+      - MYSQL_DATABASE=fecshop
     networks:
       - code-network 
   php:  
