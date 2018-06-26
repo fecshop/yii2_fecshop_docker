@@ -19,8 +19,6 @@ services:
       - ./db/mysql/data:/var/lib/mysql 
       - ./db/mysql/example_db:/var/example_db 
       - ./db/mysql/conf.d:/etc/mysql/conf.d      
-    ports:  
-      - "3306:3306" 
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
@@ -48,9 +46,6 @@ services:
       - ./db/mongodb/data:/data/db
       - ./db/mongodb/example_db:/data/example_db
       - ./db/mongodb/logs:/data/logs
-    command: ["mongod", "--bind_ip", "php"]
-    ports:
-      - 27017:27017 
     networks:
       - code-network 
   
@@ -60,12 +55,10 @@ services:
     volumes:
       - ./db/xunsearch/data:/usr/local/xunsearch/data  
     networks:
-      - code-network 
+      - code-network
   redis:
     image: redis:4.0
     restart: always
-    ports:
-      - "6379:6379"
     environment:
         REDIS_PASS_FILE: /run/secrets/redis-password
     command: [
