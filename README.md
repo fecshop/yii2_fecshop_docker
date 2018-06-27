@@ -223,7 +223,8 @@ docker-compose exec php  bash
 cd /www/web
 ```
 
-**最新的fecshop版本参看**：https://github.com/fecshop/yii2_fecshop/releases，
+**最新的fecshop版本参看**：https://github.com/fecshop/yii2_fecshop/releases
+，
 将`1.4.4.0` 替换成相应的fecshop版本。
 
 ```
