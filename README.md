@@ -134,6 +134,7 @@ service docker start
 > 看网速，如果用阿里云，15分钟差不多完成，使用下面的命令构建环境
 
 ```
+chmod 755 /usr/local/bin/docker-compose
 docker-compose build
 ```
 
@@ -464,6 +465,11 @@ nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 
 上面是一个nginx配置的过程，对于不熟悉nginx的人，先去了解一下nginx知识吧。
 
+nginx里面的图片域名对应一个文件路径，fec配置文件地址`./example_data/fecshop/common/config/fecshop_local_services/Image.php`里面的配置也有文件路径，
+如果您要使用自己的域名，这个要对应好地址，否则图片无法访问。
+
+
+
 4.上面我们将配置文件修改完成了，下面，我们将配置覆盖到fecshop的目录里
 
 4.1将配置文件`./example_data/fecshop/*` 覆盖到 `./app/fecshop/`
@@ -562,6 +568,14 @@ sh fullSearchSync.sh    //ubuntu下面用bash
 
 如果没有报错，就完成了，执行`exit`退出php容器。
 
+这样，我们基本配置完成了，因为上面更改了很多配置，因此需要执行 docker-compose 重启(注意要到宿主主机的`yii2_fecshop_docker`文件夹下面执行)
+
+```
+docker-compose stop
+docker-compose up -d
+```
+
+然后就可以访问了
 
 10.后台的默认用户名密码
 
