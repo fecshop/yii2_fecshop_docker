@@ -103,6 +103,8 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-c
 下载当前库文件，通过`git clone`下载：
 
 ```
+mkdir -p /www/web
+cd /www/web
 git clone https://github.com/fecshop/yii2_fecshop_docker.git
 ```
 
@@ -594,7 +596,15 @@ appserver: `appserver.fecshop.com`
 
 console： `对于console的执行，需要进入php的容器，在 /www/web/fecshop中执行。`
 
+### 配置开机启动
 
+vim /etc/rc.d/rc.local , 新行，添加下面的命令行
+
+```
+service docker start && cd /www/web/yii2_fecshop_docker && /usr/local/bin/docker-compose up -d
+```
+
+注意，要将`/www/web/yii2_fecshop_docker` 替换成您自己的地址。
 
 ### 安装VUE部分
 
