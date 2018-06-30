@@ -598,7 +598,13 @@ console： `对于console的执行，需要进入php的容器，在 /www/web/fec
 
 ### 配置开机启动
 
-vim /etc/rc.d/rc.local , 新行，添加下面的命令行
+1.centos7下面开机启动docker
+
+```
+systemctl enable docker
+```
+
+2.开机启动docker-compose，`vim /etc/rc.d/rc.local` , 新行，添加下面的命令行
 
 ```
 service docker start &&  /usr/local/bin/docker-compose -f /www/web/yii2_fecshop_docker/docker-compose.yml up -d
