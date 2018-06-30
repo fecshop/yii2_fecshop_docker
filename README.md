@@ -601,7 +601,7 @@ console： `对于console的执行，需要进入php的容器，在 /www/web/fec
 vim /etc/rc.d/rc.local , 新行，添加下面的命令行
 
 ```
-service docker start && cd /www/web/yii2_fecshop_docker && /usr/local/bin/docker-compose up -d
+service docker start &&  /usr/local/bin/docker-compose -f /www/web/yii2_fecshop_docker/docker-compose.yml up -d
 ```
 
 注意，要将`/www/web/yii2_fecshop_docker` 替换成您自己的地址。
