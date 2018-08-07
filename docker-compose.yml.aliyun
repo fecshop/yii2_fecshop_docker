@@ -47,7 +47,6 @@ services:
       - ./db/mongodb/data:/data/db
       - ./db/mongodb/example_db:/data/example_db
       - ./db/mongodb/logs:/data/logs
-    command: ["mongod", "--bind_ip", "php"] 
     networks:
       - code-network 
   
