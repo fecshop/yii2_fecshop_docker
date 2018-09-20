@@ -667,27 +667,14 @@ ssh1:
       - "2222:22"
 ```
 
-我们需要ssh1这个容器可以连接mongodb的容器，因此需要在mongodb的容器绑定ip的部分，把ssh1加上去
 
-```
-mongodb:
-    image: mongo:3.7
-    restart: always
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/data/logs
-    volumes:
-      - ./db/mongodb/data:/data/db
-      - ./db/mongodb/example_db:/data/example_db
-      - ./db/mongodb/logs:/data/logs
-    command: ["mongod", "--bind_ip", "php,ssh1"]
-    ports:
-      - 27017:27017 
-    networks:
-      - code-network 
-```
+加入后的配置示例如下：
 
-加入后的配置示例如下（下面只是给一个例子参考，切勿复制下面的文件覆盖你的docker-compose.yml）：
+**下面只是给一个例子参考，切勿复制下面的文件覆盖你的docker-compose.yml**
+
+**下面只是给一个例子参考，切勿复制下面的文件覆盖你的docker-compose.yml**
+
+**下面只是给一个例子参考，切勿复制下面的文件覆盖你的docker-compose.yml**
 
 ```
 version: "2"  
@@ -736,9 +723,6 @@ services:
       - ./db/mongodb/data:/data/db
       - ./db/mongodb/example_db:/data/example_db
       - ./db/mongodb/logs:/data/logs
-    command: ["mongod", "--bind_ip", "php,ssh1"]
-    ports:
-      - 27017:27017 
     networks:
       - code-network 
   ssh1:  
