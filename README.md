@@ -782,6 +782,18 @@ $cfg['Servers'][$i]['host'] = 'mysql';
 
 OK，是不是so easy？ 不光妈妈，就连爸爸也不担心我繁琐的配置fecshop的环境，^-^,,
 
+---------------------------------------------------------------------------
+帮助：
+
+> 在使用docker的时候有很多东西的安装可能不习惯， 下面有一些帮助文章
+
+1.如何配置https，Docker容器环境中用Let's Encrypt部署HTTPS
+
+详细： http://www.fecshop.com/topic/1249
+
+2.docker-compose 计划任务cron，执行某个容器里面的shell脚本或者二进制可执行文件
+
+详细： http://www.fecshop.com/topic/1296
 
 
 ---------------------------------------------------------------------------
@@ -799,6 +811,5 @@ docker-compose.yml.php.aliyun中添加了做好了的php镜像，地址放到了
 
 docker-compose.yml.php.hub： php镜像放到了hub.docker.com ，国外服务器使用该地址
 
-2.如何配置https，Docker容器环境中用Let's Encrypt部署HTTPS
 
-答：http://www.fecshop.com/topic/1249
+
