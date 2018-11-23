@@ -18,20 +18,20 @@ Fecshop Docker
 ---------
 
 
-`./app`: 这里是代码文件，fecshop的代码文件放到这里（打开后发现里面没有文件，这是因为fecshop的文件是需要composer安装后才有会的，因此，严格按照下面的操作步骤执行就好）,在后面又有安装步骤，进入php容器后，使用composer安装fecshop后，文件就在 ./app/fecshop文件下面
+`./app`: 这里是代码文件，fecshop的代码文件放到这里（打开后发现里面没有文件，这是因为fecshop的文件是需要composer安装后才会有的，因此，严格按照下面的操作步骤执行就好）,在后面又有安装步骤，进入php容器后，使用composer安装fecshop后，文件就在 ./app/fecshop文件下面
 
 `./db`: 这里是环境部分-数据库部分
 
-`./db/mongodb`: 这里是mongodb数据库的部分 
+`./db/mongodb`: 这里是mongodb数据库的部分
 
-`./db/mongodb/data`: 这里是数据库的数据存放的部分，也就是数据库的库表部分数据。 
+`./db/mongodb/data`: 这里是数据库的数据存放的部分，也就是数据库的库表部分数据。
 
 `./db/mongodb/example_db`: fecshop的mongodb示例数据
 
-`./db/mongodb/etc/mongod.conf`: Mongodb数据库的配置文件 
+`./db/mongodb/etc/mongod.conf`: Mongodb数据库的配置文件
 
 
-`./db/mongodb/logs`: Mongodb的logs部分 
+`./db/mongodb/logs`: Mongodb的logs部分
 
 
 `./db/mysql`: mysql数据库
@@ -56,7 +56,7 @@ Fecshop Docker
 
 `./example_data`: fecshop的示例数据部分
 
- 
+
 `./services`: 服务软件部分，譬如php nginx等
 
 `./services/php`: php部分
@@ -197,7 +197,7 @@ docker-compose stop
 > 每一个容器的数据和配置文件都是在宿主主机上面，通过`volumes`
 > 挂载到容器的相应文件夹中，（我们在`./docker-compose.yml`
 > 配置文件中的`volumes`做了映射）
-> 
+>
 > 因此，对于docker 容器，里面涉及到存储的部分，都应该通过
 > 挂载的方式映射到宿主机上面，而不是在容器里面。
 
@@ -206,7 +206,7 @@ docker-compose stop
 `容器主机`：就是docker容器虚拟的主机。
 
 
-1、启动: 
+1、启动:
 
 进入yii2_fecshop_docker目录，执行：
 
@@ -232,7 +232,7 @@ cd /www/web
 
 ```
 composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.4.4.0
-   
+
 ```
 
 **一定要将 1.4.4.0 替换成最新的版本！！**  **一定要将 1.4.4.0 替换成最新的版本！！**
@@ -248,7 +248,7 @@ composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.4.4.0
 ```
 Head to https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+b3817f538307+2018-06-12+1503
 to retrieve a token. It will be stored in "/root/.composer/auth.json" for future use by Composer.
-Token (hidden): 
+Token (hidden):
 ```
 
 
@@ -366,7 +366,7 @@ Which environment do you want the application to be initialized in?
 
   ... initialization completed.
 
-root@21b9518c220b:/www/web/fecshop# 
+root@21b9518c220b:/www/web/fecshop#
 ```
 
 
@@ -385,7 +385,7 @@ root@21b9518c220b:/www/web/fecshop#
 ，完成后  `./app/fecshop` 就是fecshop系统包的根目录
 
 ```
-cd fecshop   
+cd fecshop
 ./init
 ```
 
@@ -453,11 +453,11 @@ nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 然后修改fecshop中的各个域名的配置，打开 `./example_data/fecshop/`， 三个入口的store配置
 
 ```
-@appfront/config/fecshop_local_services/Store.php 
+@appfront/config/fecshop_local_services/Store.php
 
-@apphtml5/config/fecshop_local_services/Store.php 
+@apphtml5/config/fecshop_local_services/Store.php
 
-@appserver/config/fecshop_local_services/Store.php 
+@appserver/config/fecshop_local_services/Store.php
 ```
 
 关于域名配置的详细，您可以参考:[Fecshop配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)，的第4部分。
@@ -487,7 +487,7 @@ unzip -o ./example_img_and_db_data/appimage.zip  -d  ../app/fecshop/
 
 > 此步骤，复制文件，非常重要，请务必保证复制成功完成, 有不少童鞋都是这个步骤导致出现各种问题的，复制完可以自己核对一下，是否复制成功
 
-5.Yii2 migratge方式导入表结构。
+5.Yii2 migrate方式导入表结构。
 
 ```
 docker-compose exec php bash
@@ -565,7 +565,7 @@ dpkg-reconfigure dash
 ```
 
 cd /www/web/fecshop/vendor/fancyecommerce/fecshop/shell/search
-sh fullSearchSync.sh    //ubuntu下面用bash  
+sh fullSearchSync.sh    //ubuntu下面用bash
 ```
 
 如果没有报错，就完成了，执行`exit`退出php容器。
@@ -635,7 +635,7 @@ npm run build
 就可以访问：http://vue.fecshop.com
 了，因为nginx默认已经配置了这个域名，可以直接访问。
 
-OK,fecshop docker compose的安装过程完成了。  
+OK,fecshop docker compose的安装过程完成了。
 
 是不是，so easy？，，，，妈妈再也不用担心我繁琐的安装fecshop了。
 
@@ -658,11 +658,11 @@ OK,fecshop docker compose的安装过程完成了。
 1.3 打开根目录的 `docker-compose.yml`, 在配置的services中加入：
 
 ```
-ssh1:  
-    build: 
+ssh1:
+    build:
       context: ./services/ssh/docker/
     networks:
-      - code-network 
+      - code-network
     ports:
       - "2222:22"
 ```
@@ -677,14 +677,14 @@ ssh1:
 **下面只是给一个例子参考，切勿复制下面的文件覆盖你的docker-compose.yml**
 
 ```
-version: "2"  
-services:  
-  web:  
-    image: nginx  
-    ports:  
-      - "80:80" 
+version: "2"
+services:
+  web:
+    image: nginx
+    ports:
+      - "80:80"
     restart: always
-    volumes:  
+    volumes:
       - ./app:/www/web
       - ./services/web/nginx/conf:/etc/nginx
       - ./services/web/nginx/logs:/www/web_logs
@@ -708,11 +708,11 @@ services:
       '
     ]
     volumes:
-      - ./db/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf 
-      - ./db/redis/data:/data 
-      - ./db/redis/etc/redis-password:/run/secrets/redis-password 
+      - ./db/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./db/redis/data:/data
+      - ./db/redis/etc/redis-password:/run/secrets/redis-password
     networks:
-      - code-network 
+      - code-network
   mongodb:
     image: mongo:3.7
     restart: always
@@ -724,12 +724,12 @@ services:
       - ./db/mongodb/example_db:/data/example_db
       - ./db/mongodb/logs:/data/logs
     networks:
-      - code-network 
-  ssh1:  
-    build: 
+      - code-network
+  ssh1:
+    build:
       context: ./services/ssh/docker/
     networks:
-      - code-network 
+      - code-network
     ports:
       - "2222:22"
 networks:
