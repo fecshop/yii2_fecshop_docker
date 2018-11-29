@@ -17,6 +17,7 @@ services:
     image: mysql:5.7 
     volumes:  
       - ./db/mysql/data:/var/lib/mysql 
+      - ./db/mysql/log:/var/log/mysql
       - ./db/mysql/example_db:/var/example_db 
       - ./db/mysql/conf.d:/etc/mysql/conf.d      
     restart: always
