@@ -736,7 +736,7 @@ networks:
   code-network:
     driver: bridge
 ```
-1.4设置mongodb容器，运行ssh1容器访问
+1.4设置mongodb容器， mongod.conf配置文件里面的ip访问，允许ssh1容器访问mongodb
 
 打开文件`db/mongodb/etc/mongod.conf`，将29行`bindIp: php`,改成 `bindIp: php,ssh1`，保存
 
