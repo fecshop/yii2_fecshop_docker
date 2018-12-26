@@ -736,14 +736,20 @@ networks:
   code-network:
     driver: bridge
 ```
+1.4设置mongodb容器，运行ssh1容器访问
 
-1.3下载robomongo，打开mongodb connects窗口。然后点击create，在弹出的窗口中有connection，ssh 和其他的tab块
+打开文件`db/mongodb/etc/mongod.conf`，将29行`bindIp: php`,改成 `bindIp: php,ssh1`，保存
+
+重启docker-compose
+
+
+1.5下载robomongo，打开mongodb connects窗口。然后点击create，在弹出的窗口中有connection，ssh 和其他的tab块
 
 ![](333.png)
 
-1.3.1 connection中填写： type：`redirect connection`，name：`fecshop`，Addredd：`mongodb` : `27017`
+1.5.1 connection中填写： type：`redirect connection`，name：`fecshop`，Addredd：`mongodb` : `27017`
 
-1.3.2 点击SSH，勾选Use SSH tunnel，然后进行如下填写：
+1.5.2 点击SSH，勾选Use SSH tunnel，然后进行如下填写：
 
 
 ssh address ： `您的主机IP`：`2222`
