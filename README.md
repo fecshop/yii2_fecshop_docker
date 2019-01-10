@@ -426,7 +426,7 @@ cd fecshop
 
 **注意：上面的host映射，需要将`#符号`以及后面的注释部分去掉**
 
-譬如：将 `127.0.0.1       my.fecshop.com       # mysql的phpmyadmin的域名指向` 改成 `127.0.0.1       my.fecshop.com , 有一些童鞋没有去掉
+譬如：将 `127.0.0.1       my.fecshop.com       # mysql的phpmyadmin的域名指向` 改成 `127.0.0.1       my.fecshop.com` , 有一些童鞋没有去掉
 后面的注释，而导致host映射没有生效
 
 2.更改`./example_data`里面的配置文件
