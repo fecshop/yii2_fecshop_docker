@@ -22,7 +22,7 @@ RUN docker-php-ext-install mcrypt zip intl mbstring mysqli pdo_mysql exif xmlrpc
     && docker-php-ext-install gd
 
 
-RUN pecl install -o -f oauth mongodb amqp \
+RUN pecl install -o -f oauth mongodb \
     && rm -rf /tmp/pear
 
 RUN docker-php-ext-enable mongodb oauth amqp
