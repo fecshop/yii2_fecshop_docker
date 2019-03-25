@@ -231,7 +231,7 @@ cd /www/web
 将`1.4.4.0` 替换成相应的fecshop版本。
 
 ```
-composer create-project fancyecommerce/fecshop-app-advanced  fecshop 1.4.4.0
+composer create-project fancyecommerce/fecshop-app-advanced fecshop 1.4.4.0
    
 ```
 
