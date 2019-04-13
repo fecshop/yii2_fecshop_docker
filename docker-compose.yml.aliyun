@@ -27,7 +27,7 @@ services:
     networks:
       - code-network 
   php:  
-    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/php-7.1.13-fpm
+    image: registry.cn-hangzhou.aliyuncs.com/fecshopsoft/php-7.1.13-fpm_2
     restart: always
     volumes:  
       - ./app:/www/web
