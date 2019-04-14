@@ -13,6 +13,15 @@ Fecshop Docker
 如果你对docker不熟悉，可以参看 [fecshop docker 安装视频](http://www.fecshop.com/doc/fecshop-guide/instructions/cn-1.0/guide-fecshop_video_docker_install.html)
 
 
+小白用户
+---------
+
+对于小白用户，对docker了解的少，建议使用docker小白版安装教程安装：
+https://github.com/fecshop/yii2_fecshop_docker_fool
+，该教程将很多东西都给安装了，数据库文件等都已经安装好，配置下nginx就可以跑起来，
+对docker了解的，建议使用该标准安装教程安装fecshop。
+
+
 
 目录结构介绍
 ---------
