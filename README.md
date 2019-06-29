@@ -22,6 +22,20 @@ https://github.com/fecshop/yii2_fecshop_docker_fool
 对docker了解的，建议使用该标准安装教程安装fecshop。
 
 
+网络问题说明
+------------
+
+> docker-compose.yml，默认使用的是国外的源，如果您是国内的服务器，可能会遇到某些包被墙
+，您可以按照下面的方法，使用阿里云的源，适合国内的用户下载安装docker环境
+
+1.如果您在docker环境构建的过程中，出现因为网速问题，导致的安装失败，可以将 `docker-compose.yml.aliyun` 内容覆盖 `docker-compose.yml` ,全部使用阿里云
+的镜像（镜像是由fecshop上传的）。
+
+2.fecshop的代码是基于composer安装的，可能安装过程中拉取fecshop依赖的库包存在网络问题，您可以
+使用`百度云盘完整版`, 下面有使用的说明
+
+曾经有人遇到过这个问题，估计是网络问题：http://www.fecshop.com/topic/641
+
 
 目录结构介绍
 ---------
@@ -148,6 +162,11 @@ service docker start
 chmod 755 /usr/local/bin/docker-compose
 docker-compose build
 ```
+
+### 网络问题解决
+
+> docker-compose.yml，默认使用的是国外的源，如果您是国内的服务器，可能会遇到某些包被墙
+，您可以按照下面的方法，使用阿里云的源，适合国内的用户下载安装docker环境
 
 如果您在构建的过程中，出现因为网速问题，导致的安装失败，可以将 `docker-compose.yml.aliyun` 内容覆盖 `docker-compose.yml` ,全部使用阿里云
 的镜像（镜像是由fecshop上传的）。
