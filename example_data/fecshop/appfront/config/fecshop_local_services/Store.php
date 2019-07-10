@@ -19,6 +19,7 @@
                     'condition'         => ['phone', 'tablet'], // phone 代表手机，tablet代表平板，当都填写，代表手机和平板都会进行跳转
                     'redirectDomain'    => 'fecshop.apphtml5.fancyecommerce.com',    // 如果是移动设备访问进行域名跳转，这里填写的值为store key
                     'https'             => false,  // 手机端url是否支持https,如果支持，设置https为true，如果不支持，设置为false
+                    'type'              => 'apphtml5',  //  填写值选择：[apphtml5, appserver]，如果是 apphtml5 ， 则表示跳转到html5入口，如果是appserver，则表示跳转到vue这种appserver对应的入口
                 ],
                 // 第三方账号登录配置
                 'thirdLogin' => [
@@ -34,7 +35,7 @@
                     ],
                 ],
                 // 用于sitemap生成中域名。
-                'https'            => true,
+                'https'            => false,
                 // sitemap的路径。
                 'sitemapDir' => '@appfront/web/sitemap.xml',
             ],
@@ -49,6 +50,7 @@
                     'condition'            => ['phone'], // phone 代表手机，tablet代表平板。
                     'redirectDomain'       => 'fecshop.apphtml5.fancyecommerce.com/fr', // 跳转后的url。
                     'https'             => false,  // 手机端url是否支持https,如果支持，设置https为true，如果不支持，设置为false
+                    'type'              => 'apphtml5',  //  填写值选择：[apphtml5, appserver]，如果是 apphtml5 ， 则表示跳转到html5入口，如果是appserver，则表示跳转到vue这种appserver对应的入口
                 ],
                 // 第三方账号登录配置
                 'thirdLogin' => [
@@ -76,6 +78,7 @@
                     'condition'         => ['tablet'],
                     'redirectDomain'    => 'fecshop.apphtml5.es.fancyecommerce.com',
                     'https'             => false,  // 手机端url是否支持https,如果支持，设置https为true，如果不支持，设置为false
+                    'type'              => 'apphtml5',  //  填写值选择：[apphtml5, appserver]，如果是 apphtml5 ， 则表示跳转到html5入口，如果是appserver，则表示跳转到vue这种appserver对应的入口
                 ],
                 // 第三方账号登录配置
                 'thirdLogin' => [
@@ -103,6 +106,7 @@
                     'condition'         => ['phone', 'tablet'],
                     'redirectDomain'    => 'fecshop.apphtml5.fancyecommerce.com/cn',
                     'https'             => false,  // 手机端url是否支持https,如果支持，设置https为true，如果不支持，设置为false
+                    'type'              => 'apphtml5',  //  填写值选择：[apphtml5, appserver]，如果是 apphtml5 ， 则表示跳转到html5入口，如果是appserver，则表示跳转到vue这种appserver对应的入口
                 ],
                 // 第三方账号登录配置
                 'thirdLogin' => [
