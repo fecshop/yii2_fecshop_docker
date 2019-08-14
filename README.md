@@ -28,7 +28,7 @@ Fecshop Docker
 目录结构介绍
 ---------
 
-[目录结构介绍](README-1.md)
+[目录结构介绍](README-FILE.md)
 
 
 安装docker和docker compose
