@@ -11,6 +11,10 @@ Fecshop Docker
 2.fecshop-2.x版本，默认不需要redis，mongodb，xunsearch，如果您确定后面不会使用到这些扩展，
 可以在`docker-compose.yml`中将配置删除即可
 
+3.如果您是本地windows，你可以使用wamp配置fecshop，参看文档：
+[Fecmall-2.x windows WAMP环境安装 - 手把手系列](http://www.fecmall.com/doc/fecshop-guide/develop/cn-2.0/guide-fecshop-2-about-wamp-install.html)
+
+
 网络问题说明
 ------------
 
@@ -251,13 +255,6 @@ Token (hidden):
 ### 配置fecshop
 
 
-> 参考：[Fecshop 初始配置](http://www.fecshop.com/doc/fecshop-guide/develop/cn-1.0/guide-fecshop-about-config.html)
-
-> 为了更方便的配置，Terry在 `./example_data/` 中已经进行了一些默认配置，
-> 您可以按照自己的需要，在默认配置的基础上修改一部分配置，譬如数据库，域名等，然后将`./example_data/fecshop/*`的内容覆盖到`./app/fecshop`中，
-> 下面介绍的是在`./example_data/`里面修改各个配置，然后将配置覆盖到`./app/fecshop`中
-
-
 1、配置域名
 
 > 如果您是本地windows，你可以使用wamp配置fecshop，参看文档：
@@ -294,7 +291,7 @@ nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 
 宿主主机下打开配置文件  ./app/fecshop/common/config/main-local.php
 
-将数据库名称和密码改成yml文件中配置的值。
+将`数据库名称`和`数据库密码`改成yml文件中配置的值。（这个是在docker-compose.yml文件中配置的mysql值）
 
 2.2Yii2 migrate方式导入表结构。
 
@@ -347,7 +344,8 @@ cd ./fecshop-2.x-example-data
 
 右上角切换成中文语言。
 
-剩下的后台配置，你可以参看文档：http://www.fecmall.com/doc/fecshop-guide/develop/cn-2.0/guide-fecshop-2-about-hand-install.html#3
+剩下的配置，都是在后台操作完成，docker和普通的安装都是一致的，这个部分的配置，
+你可以参看文档：http://www.fecmall.com/doc/fecshop-guide/develop/cn-2.0/guide-fecshop-2-about-hand-install.html#3
 的第三部分。
 
 
