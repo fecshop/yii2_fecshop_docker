@@ -19,7 +19,6 @@ services:
       - ./db/mysql/data:/var/lib/mysql 
       - ./db/mysql/log:/var/log/mysql
       - ./db/mysql/example_db:/var/example_db 
-      - ./db/mysql/example_db:/var/example_db 
       - ./fecshop-2.x-example-data:/var/example_db_2.x      
     restart: always
     environment:
