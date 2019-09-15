@@ -190,12 +190,12 @@ composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 ```
 
-composer create-project fancyecommerce/fecshop-app-advanced fecshop 2.1.6
+composer create-project fancyecommerce/fecshop-app-advanced fecshop 2.3.2
 ```
 
-**一定要将 2.1.6 替换成最新的版本！！**  **一定要将 2.1.6 替换成最新的版本！！**
+**一定要将 2.1.6 替换成最新的版本！！**  **一定要将 2.3.2 替换成最新的版本！！**
 
-**一定要将 2.1.6 替换成最新的版本！！**  **一定要将 2.1.6 替换成最新的版本！！**
+**一定要将 2.1.6 替换成最新的版本！！**  **一定要将 2.3.2 替换成最新的版本！！**
 
 
 
