@@ -6,9 +6,13 @@ Fecshop Docker
 =============
 
 
-> 1.Fecshop-1.x版本的Docker安装参看：[Fecshop-1.x版本Docker安装教程](README-1.md)
-> 
-> 2.Fecshop 2.1和2.2版本，参看文档：[Fecshop-2.x版本Docker安装教程](README-2.2.md)
+1.Fecshop-1.x版本的Docker安装参看：[Fecshop-1.x版本Docker安装教程](README-1.md)
+
+2.fecshop-2.x版本，默认不需要redis，mongodb，xunsearch，如果您确定后面不会使用到这些扩展，
+可以在`docker-compose.yml`中将配置删除即可
+
+3.如果您是本地windows，你可以使用wamp配置fecshop，参看文档：
+[Fecmall-2.x windows WAMP环境安装 - 手把手系列](http://www.fecmall.com/doc/fecshop-guide/develop/cn-2.0/guide-fecshop-2-about-wamp-install.html)
 
 
 网络问题说明
@@ -19,6 +23,9 @@ Fecshop Docker
 
 如果您在docker环境构建的过程中，出现因为网速问题，导致的安装失败，可以将 `docker-compose.yml.aliyun` 内容覆盖 `docker-compose.yml` ,全部使用阿里云
 的镜像（镜像是由fecshop上传的）。
+
+
+
 
 
 
@@ -65,7 +72,7 @@ git clone https://github.com/fecshop/yii2_fecshop_docker.git
 - MYSQL_ROOT_PASSWORD=fecshopxfd3ffaads123456
 ```
 
-1.2更改redis的密码：（如果您不需要redis，那么这个部分忽略,fecmall默认不需要redis）
+1.2更改redis的密码：（如果您不需要redis，那么这个部分忽略）
 
 ```
 打开文件：`./db/redis/etc/redis-password`,更改里面的redis密码即可。
@@ -224,25 +231,16 @@ Token (hidden):
 
 ### init初始化
 
-进入php容器(/www/web/yii2_fecshop_docker目录下执行)
-
-```
-docker-compose exec php  bash
-```
-
 
 进入fecshop根目录，执行`init`
 
 ```
-cd /www/web/fecshop
 ./init
 ```
 
-完成init初始化后，退出php容器
+选择develop模式，也就是命令行填写 `0`  `yes` 即可
 
-```
-exit
-```
+[fecmall init 执行的log详细](README-INIT.md)
 
 
 
@@ -257,162 +255,100 @@ exit
 ### 配置fecshop
 
 
-1.准备域名
+1、配置域名
 
-> Fecmall是一个多入口的电商系统，各个入口独立访问，对应独立的子域名如下：
+> 如果您是本地windows，你可以使用wamp配置fecshop，参看文档：
+> [Fecmall-2.x windows WAMP环境安装 - 手把手系列](http://www.fecmall.com/doc/fecshop-guide/develop/cn-2.0/guide-fecshop-2-about-wamp-install.html)
+>
+> 如果您是服务器使用docker，那么使用实用域名即可，做一下解析
 
 
-Pc端：`appfront.fecshoptest.com`
+如果您没有域名，是本机，那么需要添加域名hosts映射（也就是用ip映射的方式弄假域名）
 
-后台：`appadmin.fecshoptest.com`
+windows配置文件：打开C:\Windows\System32\drivers\etc\hosts，添加如下代码,如果是其他IP，将 127.0.0.1 替换成其他IP即可。
 
-图片：`img.fecshoptest.com`
+linux： 打开 /etc/hosts 添加。
 
-H5端: `apphtml5.fecshoptest.com`(如果不安装h5，vue等入口，可以不准备)
-
-移动Api端：`appserver.fecshoptest.com`  (如果不安装微信小程序，vue等入口，可以不准备)
- 
-第三方数据对接Api端：`appapi.fecshoptest.com` (如果不和第三方系统进行数据对接，可以不准备)
-
-将上面的域名（替换成您自己的域名）解析到您的服务器，
-如果您是在本地，可以在host文件中做虚拟域名指向127.0.0.1即可
-
+```
+127.0.0.1       my.fecshoptest.com 
+127.0.0.1       appfront.fecshoptest.com
+127.0.0.1       appadmin.fecshoptest.com
+127.0.0.1       img.fecshoptest.com
+127.0.0.1       apphtml5.fecshoptest.com
+127.0.0.1       appserver.fecshoptest.com
+127.0.0.1       appapi.fecshoptest.com
+```
 
 nginx的配置文件为`./services/web/nginx/conf/conf.d/default.conf`
 
 如果您使用自定义域名，将其配置域名替换即可
 
-然后重启docker
+
+
+2.初始化数据库
+
+2.1mysql数据库配置：
+
+宿主主机下打开配置文件  ./app/fecshop/common/config/main-local.php
+
+将`数据库名称`和`数据库密码`改成yml文件中配置的值。（这个是在docker-compose.yml文件中配置的mysql值）
+
+2.2Yii2 migrate方式导入表结构。
+
+在docker的根目录下执行如下命名，进入php容器
 
 ```
-docker-compose stop
-docker-compose up -d
+docker-compose exec php bash
+cd /www/web/fecshop
+```
+mysql表结构初始化安装
+
+```
+./yii migrate --interactive=0 --migrationPath=@fecshop/migrations/mysqldb
 ```
 
-Fecmall界面安装
-----------------
+`exit`，退出容器,回到宿主主机
 
-1.在上面的步骤中，配置了nginx, 您配置好域名后，appfront对应域名配置为：`appfront.fecshoptest.com`   >  `$root/appfront/web/`
 
-安装入口文件为：`$root/appfront/web/install.php`
-, 打开安装地址： http://appfront.fecshoptest.com/install.php （替换成您自己的域名）
+2.3安装mysql数据库的测试数据
 
+在根目录(docker-compose.yml文件所在目录)下执行，进入mysql的容器
 
-![](images/da1.png)
+```
+docker-compose exec mysql bash
+```
 
+执行`mysql -uroot -p` 进入mysql
 
+```
+use fecshop;
+source /var/example_db_2.x/fecshop.sql
+exit
+```
 
-2.填写mysql的配置，点击提交
+`exit`，退出容器,回到宿主主机
 
-![](images/da2.png)
 
-提交后，如图：
+3.复制测试图片到fecmall下（在宿主主机中执行）
 
-![](images/da11.png)
+```
+cd ./fecshop-2.x-example-data
+\cp -rf ./appimage ../app/fecshop/
+```
 
-mysql的配置写入了配置文件：`@common/config/main-local.php`
+4.访问后台：
 
-点击按钮： `进行数据表初始化`，需要一段时间执行（请耐心等待），执行完成后的界面如下：
+也就是上面配置的域名：appadmin.fecshoptest.com
 
+初始账户密码： admin admin123
 
-![](images/da12.png)
+右上角切换成中文语言。
 
+剩下的配置，都是在后台操作完成，docker和普通的安装都是一致的，这个部分的配置，
+你可以参看文档：http://www.fecmall.com/doc/fecshop-guide/develop/cn-2.0/guide-fecshop-2-about-hand-install.html#3
+的第三部分。
 
-
-点击`测试产品数据安装`，完成后界面（如果不想安装测试数据，可以点击`跳过`按钮）
-
-![](images/da13.png)
-
-
-
-点击`下一步`按钮，进入完成安装界面
-
-![](images/da15.png)
-
-
-您可以进入mysql查看一下数据表是否已经创建，然后查看一下`product_flat`表里面是否有数据，进行数据库初始化以及
-测试数据安装成功确认。
-
-
-
-3.您还需要进行如下的步骤：
-
-3.1需要设置`安全权限`（根目录执行，win不需要执行）：`chmod 644 common/config/main-local.php`
-
-3.2删除安装文件 install.php（**为了安全，一定要删除掉**）(文件路径为：`./app/fecshop/appfront/web/install.php`),
-
-
-Fecmall访问后台，进行后台配置
------------------------
-
-也就是上面配置的域名：`appadmin.fecshoptest.com`
-
-初始账户密码：  `admin`  `admin123`
-
-右上角切换成`中文语言`。
-
-**首先配置图片域名** 
-
-`网站配置`-->`基础配置`-->`基础配置`  找到`图片域名`，填写您的图片域名，譬如：`//img.fecshoptest.com`
-(前面不要加`http:`,这种方式http和https都可以调用图片url,将该域名替换成您自己的域名)
-
-![](images/ff1.png)
-
-3.1后台添加`appfront`(PC)配置，添加`store`
-
-
-`网站配置`-->`Appfront配置`-->`Store配置`
-
-可以看到`store`列表，点击`id为1`的数据（激活状态），进行编辑，将域名更改成 `appfront.fecshoptest.com`(替换成您自己的域名)，保存
-
-然后就可以访问：appfront.fecshoptest.com ，查看pc端了
-
-![](images/ff2.png)
-
-
-3.2配置Apphtml5
-
-`网站配置`-->`Apphtml5配置`-->`Store配置`
-
-可以看到store列表，点击`id为8`的数据（激活状态），进行编辑，将域名更改成 `apphtml5.fecshoptest.com`(替换成您自己的域名)，保存
-
-然后就可以访问：apphtml5.fecshoptest.com ，查看H5端了
-
-![](images/ff3.png)
-
-
-3.3配置Appserver
-
-
-> 这里是对`Appserver`端的配置，对应的域名为：`appserver.fecshoptest.com`(替换成您自己的域名) ,是对微信小程序，vue等客户端提供api的入口
-
-`网站配置`-->`Appappserver配置`-->`Store配置`
-
-将 `Store Key` 更改成 `appserver.fecshoptest.com` (替换成您自己的域名)即可。
-
-![](images/ff5.png)
-
-Appserver 就可以为vue和微信小程序提供api了。
-
-其他的配置
-----------------
-
-> 配置完`appserver.fecshoptest.com`，您可以安装vue和微信小程序等客户端
-
-`vue`: https://github.com/fecshop/vue_fecshop_appserver
-
-`微信小程序`：https://github.com/fecshop/wx_micro_program
-
-
-
-
-
-
-
-
-
-
-
+操作完成后，您就可以访问appfront  apphtml5  appadmin各个入口了
 
 
 ### 配置开机启动docker以及docker容器
