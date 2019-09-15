@@ -9,7 +9,8 @@ Fecshop Docker
 > 1.Fecshop-1.x版本的Docker安装参看：[Fecshop-1.x版本Docker安装教程](README-1.md)
 > 
 > 2.Fecshop 2.1和2.2版本，参看文档：[Fecshop-2.x版本Docker安装教程](README-2.2.md)
-
+>
+> 3.Fecshop 2.3以上的版本，参看本文安装教程（2.3.2版本以上）
 
 网络问题说明
 ------------
@@ -17,7 +18,7 @@ Fecshop Docker
 > docker-compose.yml，默认使用的是国外的源，如果您是国内的服务器，可能会遇到某些包被墙
 ，您可以按照下面的方法，使用阿里云的源，适合国内的用户下载安装docker环境
 
-如果您在docker环境构建的过程中，出现因为网速问题，导致的安装失败，可以将 `docker-compose.yml.aliyun` 内容覆盖 `docker-compose.yml` ,全部使用阿里云
+国内用户，如果您在docker环境构建的过程中，出现因为网速问题，导致的安装失败，可以将 `docker-compose.yml.aliyun` 内容覆盖 `docker-compose.yml` ,全部使用阿里云
 的镜像（镜像是由fecshop上传的）。
 
 
@@ -186,16 +187,16 @@ composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 **最新的fecshop版本参看**：https://github.com/fecshop/yii2_fecshop/releases
 ，
-将`2.1.6` 替换成相应的fecshop版本。
+将`2.3.2` 替换成相应的fecshop版本。
 
 ```
 
 composer create-project fancyecommerce/fecshop-app-advanced fecshop 2.3.2
 ```
 
-**一定要将 2.1.6 替换成最新的版本！！**  **一定要将 2.3.2 替换成最新的版本！！**
+**一定要将 2.3.2 替换成最新的版本！！**  **一定要将 2.3.2 替换成最新的版本！！**
 
-**一定要将 2.1.6 替换成最新的版本！！**  **一定要将 2.3.2 替换成最新的版本！！**
+**一定要将 2.3.2 替换成最新的版本！！**  **一定要将 2.3.2 替换成最新的版本！！**
 
 
 
@@ -311,6 +312,8 @@ Fecmall界面安装
 ![](images/da11.png)
 
 mysql的配置写入了配置文件：`@common/config/main-local.php`
+，mysql的数据库和用户名密码，就是`docker-compose.yml`里面配置的mysql参数，
+注意，host不要填写`127.0.0.1`,**而是填写`mysql`**
 
 点击按钮： `进行数据表初始化`，需要一段时间执行（请耐心等待），执行完成后的界面如下：
 
