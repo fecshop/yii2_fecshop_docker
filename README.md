@@ -301,7 +301,8 @@ Fecmall界面安装
 
 ![](images/da1.png)
 
-
+mysql的数据库和用户名密码，就是`docker-compose.yml`里面配置的mysql参数，
+注意，host不要填写`127.0.0.1`,**而是填写`mysql`**
 
 2.填写mysql的配置，点击提交
 
@@ -312,8 +313,7 @@ Fecmall界面安装
 ![](images/da11.png)
 
 mysql的配置写入了配置文件：`@common/config/main-local.php`
-，mysql的数据库和用户名密码，就是`docker-compose.yml`里面配置的mysql参数，
-注意，host不要填写`127.0.0.1`,**而是填写`mysql`**
+
 
 点击按钮： `进行数据表初始化`，需要一段时间执行（请耐心等待），执行完成后的界面如下：
 
